@@ -138,7 +138,8 @@ brew install selenium-server-standalone
 
 # PHP 5.6
 brew tap homebrew/homebrew-php
-brew install php56 php56-apcu php56-mcrypt php56-memcached php56-mongo
+brew install php56 --with-gmp
+brew install php56-apcu php56-mcrypt php56-memcached php56-mongo
 ln -sfv /usr/local/opt/php56/*.plist ~/Library/LaunchAgents
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php56.plist
 
