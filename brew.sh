@@ -46,7 +46,7 @@ brew install vim --override-system-vi
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
 brew install homebrew/dupes/screen
-brew install homebrew/php/php55 --with-gmp
+#brew install homebrew/php/php55 --with-gmp
 
 # Install font tools.
 brew tap bramstein/webfonttools
@@ -86,9 +86,11 @@ brew install dark-mode
 #brew install exiv2
 brew install git
 brew install git-lfs
+brew install htop-osx
 brew install imagemagick --with-webp
 brew install lua
 brew install lynx
+brew install mc
 brew install p7zip
 brew install pigz
 brew install pv
@@ -96,9 +98,49 @@ brew install rename
 brew install rhino
 brew install speedtest_cli
 brew install ssh-copy-id
+brew install tmux
 brew install tree
 brew install webkit2png
+brew install weechat
+brew install youtube-dl
 brew install zopfli
+
+# NGINX #
+brew install nginx
+ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist
+
+# MYSQL #
+brew install mysql
+ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+# MONGODB #
+brew install mongodb
+ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+# ELASTICSEARCH 1.7 #
+brew install homebrew/versions/elasticsearch17
+# RABBITMQ #
+brew install rabbitmq
+ln -sfv /usr/local/opt/rabbitmq/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
+# MEMCACHED #
+brew install memcached
+ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+# ...AND THE REST #
+brew install ruby
+brew install node
+brew install openssl
+brew install vegeta
+brew install jmeter
+brew install selenium-server-standalone
+
+# PHP 5.6
+brew tap homebrew/homebrew-php
+brew install php56 php56-apcu php56-mcrypt php56-memcached php56-mongo
+ln -sfv /usr/local/opt/php56/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php56.plist
 
 # Remove outdated versions from the cellar.
 brew cleanup
