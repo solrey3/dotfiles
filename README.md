@@ -88,11 +88,11 @@ Some of the functionality of these dotfiles depends on formulae installed by `br
 Suggestions/improvements
 [welcome](https://github.com/solrey3/dotfiles/issues)!
 
+## Thanks to…
+
 | [![twitter/mathias](http://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](http://twitter.com/mathias "Follow @mathias on Twitter") |
 |---|
 | [Mathias Bynens](https://mathiasbynens.be/) |
-
-## Thanks to…
 
 * @ptb and [his _macOS Setup_ repository](https://github.com/ptb/mac-setup)
 * [Ben Alman](http://benalman.com/) and his [dotfiles repository](https://github.com/cowboy/dotfiles)
