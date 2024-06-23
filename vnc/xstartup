@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# xstartup
+
+# Start the window manager
+xsetroot -solid grey
+vncconfig -iconic &
+xterm &
+twm &
+
