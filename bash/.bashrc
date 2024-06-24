@@ -13,7 +13,7 @@ alias hist="history 1"
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # Source Docker init script
-source /Users/budchris/.docker/init-bash.sh || true
+# source /Users/budchris/.docker/init-bash.sh || true
 
 # History substring search equivalent in bash
 bind '"\e[A":history-search-backward'

@@ -17,7 +17,7 @@
 
 complete -C /opt/homebrew/bin/terraform terraform
 
-source /Users/budchris/.docker/init-bash.sh || true # Added by Docker Desktop
+# source /Users/budchris/.docker/init-bash.sh || true # Added by Docker Desktop
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 

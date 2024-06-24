@@ -1,0 +1,31 @@
+# Font settings
+font:
+  normal:
+    family: "JetBrainsMono Nerd Font"
+    style: "Regular"
+  size: 12.0
+
+# Colors
+colors:
+  primary:
+    background: "#282c34"
+    foreground: "#ffffff"
+
+# Shell configuration
+shell:
+  program: "/bin/bash"
+  args:
+    - "-l"
+
+# Environment
+env:
+  TERM: "xterm-256color"
+
+# Window settings
+window:
+  padding:
+    x: 24
+    y: 24
+  decorations: "transparent"  # Transparent borders
+  opacity: 0.8  # Set the window opacity to 80%
+
