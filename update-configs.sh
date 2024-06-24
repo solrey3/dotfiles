@@ -7,7 +7,7 @@ REPO_DIR="$HOME/dotfiles"
 create_symlink() {
     local src="$1"
     local dest="$2"
-    
+
     if [ -L "$dest" ]; then
         echo "Removing existing symlink $dest"
         rm "$dest"
@@ -30,6 +30,8 @@ create_symlink "$REPO_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 # Update Neovim configuration
 mkdir -p "$HOME/.config/nvim"
 create_symlink "$REPO_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+mkdir -p "$HOME/.config/nvim/lua"
+create_symlink "$REPO_DIR/nvim/lua/neo-tree.lua" "$HOME/.config/nvim/lua/neo-tree.lua"
 
 # Update Vim configuration
 create_symlink "$REPO_DIR/vim/.vimrc" "$HOME/.vimrc"
@@ -45,3 +47,4 @@ create_symlink "$REPO_DIR/vnc/xstartup" "$HOME/.vnc/xstartup"
 # Reload Bash
 echo "Reloading bash"
 exec bash
+
