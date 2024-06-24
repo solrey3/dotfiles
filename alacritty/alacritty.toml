@@ -10,7 +10,7 @@ primary = { background = "#282c34", foreground = "#ffffff" }
 # Shell configuration
 [shell]
 program = "/bin/bash"
-args = ["--login"]
+args = ["-1"]
 
 [env]
 TERM = "xterm-256color"

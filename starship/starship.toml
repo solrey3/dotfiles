@@ -1,0 +1,33 @@
+# ~/.config/starship/starship.toml
+
+# Prompt character configuration
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+
+# Hostname module
+[hostname]
+format = "[$hostname](bold purple) "
+
+# Directory module
+[directory]
+truncation_length = 3
+truncation_symbol = "…"
+format = "[$path](bold blue) "
+
+# Git branch module
+[git_branch]
+format = "[$branch](bold yellow) "
+
+# Time module
+[time]
+format = "[%T](bold cyan)"
+
+# Python module
+[python]
+format = "[$version](bold magenta) "
+
+# Node.js module
+[nodejs]
+format = "[$version](bold green) "
+

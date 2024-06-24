@@ -57,3 +57,8 @@ bind '"\C-r": reverse-search-history'
 bind '"\C-s": forward-search-history'
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Set STARSHIP_CONFIG environment variable
+export STARSHIP_CONFIG=~/.config/starship.toml
+eval "$(starship init bash)"
+
