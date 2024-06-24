@@ -5,19 +5,19 @@ REPO_DIR="$HOME/dotfiles"
 
 # Function to create symlinks
 create_symlink() {
-    local src="$1"
-    local dest="$2"
+	local src="$1"
+	local dest="$2"
 
-    if [ -L "$dest" ]; then
-        echo "Removing existing symlink $dest"
-        rm "$dest"
-    elif [ -e "$dest" ]; then
-        echo "Backing up existing file $dest to ${dest}.bak"
-        mv "$dest" "${dest}.bak"
-    fi
+	if [ -L "$dest" ]; then
+		echo "Removing existing symlink $dest"
+		rm "$dest"
+	elif [ -e "$dest" ]; then
+		echo "Backing up existing file $dest to ${dest}.bak"
+		mv "$dest" "${dest}.bak"
+	fi
 
-    echo "Creating symlink from $src to $dest"
-    ln -sf "$src" "$dest"
+	echo "Creating symlink from $src to $dest"
+	ln -sf "$src" "$dest"
 }
 
 # Update Bash configuration
@@ -30,8 +30,8 @@ create_symlink "$REPO_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 # Update Neovim configuration
 mkdir -p "$HOME/.config/nvim"
 create_symlink "$REPO_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
-mkdir -p "$HOME/.config/nvim/lua"
-create_symlink "$REPO_DIR/nvim/lua/neo-tree.lua" "$HOME/.config/nvim/lua/neo-tree.lua"
+mkdir -p "$HOME/.config/nvim/lua/plugins"
+create_symlink "$REPO_DIR/nvim/lua/plugins/neo-tree.lua" "$HOME/.config/nvim/lua/plugins/neo-tree.lua"
 
 # Update Vim configuration
 create_symlink "$REPO_DIR/vim/.vimrc" "$HOME/.vimrc"
@@ -47,4 +47,3 @@ create_symlink "$REPO_DIR/vnc/xstartup" "$HOME/.vnc/xstartup"
 # Reload Bash
 echo "Reloading bash"
 exec bash
-
