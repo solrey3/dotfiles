@@ -30,10 +30,12 @@ create_symlink "$REPO_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 # Update Neovim configuration
 mkdir -p "$HOME/.config/nvim"
 create_symlink "$REPO_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+mkdir -p "$HOME/.config/nvim/lua/config"
+create_symlink "$REPO_DIR/nvim/lua/config/keymaps.lua" "$HOME/.config/nvim/lua/config/keymaps.lua"
+create_symlink "$REPO_DIR/nvim/lua/config/options.lua" "$HOME/.config/nvim/lua/config/optons.lus"
 mkdir -p "$HOME/.config/nvim/lua/plugins"
 create_symlink "$REPO_DIR/nvim/lua/plugins/neo-tree.lua" "$HOME/.config/nvim/lua/plugins/neo-tree.lua"
-
-# Update Vim configuration
+create_symlink "$REPO_DIR/nvim/lua/plugins/telescope.lua" "$HOME/.config/nvim/lua/plugins/telescope.lua"
 create_symlink "$REPO_DIR/vim/.vimrc" "$HOME/.vimrc"
 
 # Update Alacritty configuration
