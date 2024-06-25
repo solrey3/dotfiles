@@ -1,0 +1,52 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
+      GKE_ZONE: ${{ secrets.GKE_ZONE }}
+      DB_INSTANCE_CONNECTION_NAME: ${{ secrets.DB_INSTANCE_CONNECTION_NAME }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Authenticate to GKE
+        run: gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Google Container Registry
+        run: echo ${{ secrets.GCR_PASSWORD }} | docker login -u _json_key --password-stdin https://gcr.io
+
+      - name: Build and push Docker images
+        run: |
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/node-api:latest -f Dockerfile.api .
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/nextjs-web:latest -f Dockerfile.web .
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/nextjs-admin:latest -f Dockerfile.admin .
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/react-native:latest -f Dockerfile.mobile .
+          docker push gcr.io/${{ env.PROJECT_ID }}/node-api:latest
+          docker push gcr.io/${{ env.PROJECT_ID }}/nextjs-web:latest
+          docker push gcr.io/${{ env.PROJECT_ID }}/nextjs-admin:latest
+          docker push gcr.io/${{ env.PROJECT_ID }}/react-native:latest
+
+      - name: Deploy to GKE
+        run: |
+          kubectl apply -f k8s/node-api-deployment.yaml
+          kubectl apply -f k8s/nextjs-web-deployment.yaml
+          kubectl apply -f k8s/nextjs-admin-deployment.yaml
+          kubectl apply -f k8s/react-native-deployment.yaml

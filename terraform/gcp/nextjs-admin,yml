@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-admin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nextjs-admin
+  template:
+    metadata:
+      labels:
+        app: nextjs-admin
+    spec:
+      containers:
+      - name: nextjs-admin
+        image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/nextjs-admin:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_API_URL
+          value: "https://api.anycompany.com"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-admin
+spec:
+  selector:
+    app: nextjs-admin
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+  loadBalancerIP: ${ADMIN_IP}
