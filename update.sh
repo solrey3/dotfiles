@@ -57,6 +57,11 @@ create_symlink "$DOTFILES_DIR/vim/.vimrc" "$HOME/.vimrc"
 
 # Symlink nvim configuration
 create_symlink "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+create_symlink "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" "$HOME/.config/nvim/lua/config/keymaps.lua"
+create_symlink "$DOTFILES_DIR/nvim/lua/config/options.lua" "$HOME/.config/nvim/lua/config/options.lua"
+create_symlink "$DOTFILES_DIR/nvim/lua/plugins/neo-tree.lua" "$HOME/.config/nvim/lua/plugins/neo-tree.lua"
+create_symlink "$DOTFILES_DIR/nvim/lua/plugins/telescope.lua" "$HOME/.config/nvim/lua/plugins/telescope.lua"
+create_symlink "$DOTFILES_DIR/nvim/lua/plugins/tokyodream.lua" "$HOME/.config/nvim/lua/plugins/tokyodream.lua"
 
 # Symlink starship configuration
 create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
