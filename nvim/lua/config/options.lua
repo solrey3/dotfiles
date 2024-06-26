@@ -68,8 +68,5 @@ vim.cmd("highlight NonText guibg=NONE ctermbg=NONE")
 vim.cmd("highlight NormalNC guibg=NONE ctermbg=NONE")
 vim.cmd("highlight EndOfBuffer guibg=NONE ctermbg=NONE")
 
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
