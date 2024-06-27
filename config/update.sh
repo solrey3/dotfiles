@@ -5,7 +5,7 @@ echo "Updating starship..."
 sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
 # Define dotfiles directory
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/dotfiles/config"
 
 # Create the .config directory if it doesn't exist
 mkdir -p ~/.config
@@ -35,7 +35,7 @@ copy_file() {
 		echo "Backed up existing $destination to $destination.backup"
 	fi
 
-	cp -r "$target" "$destination"
+	rsync -a "$target" "$destination"
 	echo "Copied $target to $destination"
 }
 
@@ -47,7 +47,7 @@ create_symlink "$DOTFILES_DIR/bash/.bash_profile" "$HOME/.bash_profile"
 create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 
 # Copy tmux configuration
-copy_file "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+copy_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 create_symlink "$DOTFILES_DIR/tmux/tmux_startup.sh" "$HOME/tmux_startup.sh"
 
 # Symlink alacritty configuration
@@ -57,15 +57,13 @@ create_symlink "$DOTFILES_DIR/alacritty/alacritty.yml" "$HOME/.config/alacritty.
 create_symlink "$DOTFILES_DIR/vim/.vimrc" "$HOME/.vimrc"
 
 # Copy all files and directories in nvim directory
-for item in "$DOTFILES_DIR/nvim"/*; do
-	copy_file "$item" "$HOME/.config/nvim/$(basename "$item")"
-done
+copy_file "$DOTFILES_DIR/nvim/" "$HOME/.config/nvim"
 
 # Symlink starship configuration
 create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
-# Install Neovim plugins
+# Install Neovim plugins using LazyVim
 echo "Installing Neovim plugins..."
-nvim --headless "+Lazy! sync" +qa
+nvim --headless "+Lazy sync" +qa
 
 echo "Update complete."
