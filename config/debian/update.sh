@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Update and upgrade system packages
-sudo apt update && sudo apt upgrade -y
-
 # Update starship
 echo "Updating starship..."
 sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
@@ -13,6 +10,15 @@ DOTFILES_DIR="$HOME/dotfiles/config"
 # Create the .config directory if it doesn't exist
 mkdir -p ~/.config
 mkdir -p ~/.config/nvim
+
+# Fix locale issue
+sudo locale-gen en_US.UTF-8
+sudo bash -c 'echo -e "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" > /etc/default/locale'
+source /etc/default/locale
+
+# Export necessary locale variables
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Function to create symbolic links and backup existing regular files
 create_symlink() {
@@ -42,38 +48,25 @@ copy_file() {
 	echo "Copied $target to $destination"
 }
 
-# Switch to player1 user to clone and apply dotfiles
-sudo -u player1 bash <<EOF
-
-# Clone dotfiles repository
-if [ ! -d "\$HOME/dotfiles" ]; then
-    git clone https://github.com/solrey3/dotfiles.git \$HOME/dotfiles
-else
-    cd \$HOME/dotfiles
-    git pull origin main
-fi
-
 # Symlink bash configuration
-create_symlink "\$DOTFILES_DIR/bash/.bashrc" "\$HOME/.bashrc"
-create_symlink "\$DOTFILES_DIR/bash/.bash_profile" "\$HOME/.bash_profile"
+create_symlink "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
+create_symlink "$DOTFILES_DIR/bash/.bash_profile" "$HOME/.bash_profile"
 
 # Copy tmux configuration
-copy_file "\$DOTFILES_DIR/tmux/.tmux.conf" "\$HOME/.tmux.conf"
-create_symlink "\$DOTFILES_DIR/tmux/tmux_startup.sh" "\$HOME/tmux_startup.sh"
+copy_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
+create_symlink "$DOTFILES_DIR/tmux/tmux_startup.sh" "$HOME/tmux_startup.sh"
 
 # Symlink alacritty configuration
-create_symlink "\$DOTFILES_DIR/alacritty/alacritty.yml" "\$HOME/.config/alacritty.yml"
+create_symlink "$DOTFILES_DIR/alacritty/alacritty.yml" "$HOME/.config/alacritty.yml"
 
 # Symlink vim configuration
-create_symlink "\$DOTFILES_DIR/vim/.vimrc" "\$HOME/.vimrc"
+create_symlink "$DOTFILES_DIR/vim/.vimrc" "$HOME/.vimrc"
 
 # Copy all files and directories in nvim directory
-copy_file "\$DOTFILES_DIR/nvim/" "\$HOME/.config/nvim"
+copy_file "$DOTFILES_DIR/nvim/" "$HOME/.config/nvim"
 
 # Symlink starship configuration
-create_symlink "\$DOTFILES_DIR/starship/starship.toml" "\$HOME/.config/starship.toml"
-
-EOF
+create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
 # Source the .bashrc to apply changes
-source /home/player1/.bashrc
+source $HOME/.bashrc
