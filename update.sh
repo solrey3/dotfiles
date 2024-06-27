@@ -9,6 +9,7 @@ DOTFILES_DIR="$HOME/dotfiles"
 
 # Create the .config directory if it doesn't exist
 mkdir -p ~/.config
+mkdir -p ~/.config/nvim
 
 # Function to create symbolic links and backup existing regular files
 create_symlink() {
@@ -34,7 +35,7 @@ copy_file() {
 		echo "Backed up existing $destination to $destination.backup"
 	fi
 
-	cp "$target" "$destination"
+	cp -r "$target" "$destination"
 	echo "Copied $target to $destination"
 }
 
@@ -46,7 +47,7 @@ create_symlink "$DOTFILES_DIR/bash/.bash_profile" "$HOME/.bash_profile"
 create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 
 # Copy tmux configuration
-copy_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
+copy_file "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 create_symlink "$DOTFILES_DIR/tmux/tmux_startup.sh" "$HOME/tmux_startup.sh"
 
 # Symlink alacritty configuration
@@ -55,13 +56,10 @@ create_symlink "$DOTFILES_DIR/alacritty/alacritty.yml" "$HOME/.config/alacritty.
 # Symlink vim configuration
 create_symlink "$DOTFILES_DIR/vim/.vimrc" "$HOME/.vimrc"
 
-# Symlink nvim configuration
-create_symlink "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
-create_symlink "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" "$HOME/.config/nvim/lua/config/keymaps.lua"
-create_symlink "$DOTFILES_DIR/nvim/lua/config/options.lua" "$HOME/.config/nvim/lua/config/options.lua"
-create_symlink "$DOTFILES_DIR/nvim/lua/plugins/neo-tree.lua" "$HOME/.config/nvim/lua/plugins/neo-tree.lua"
-create_symlink "$DOTFILES_DIR/nvim/lua/plugins/telescope.lua" "$HOME/.config/nvim/lua/plugins/telescope.lua"
-create_symlink "$DOTFILES_DIR/nvim/lua/plugins/tokyodream.lua" "$HOME/.config/nvim/lua/plugins/tokyodream.lua"
+# Copy all files and directories in nvim directory
+for item in "$DOTFILES_DIR/nvim"/*; do
+	copy_file "$item" "$HOME/.config/nvim/$(basename "$item")"
+done
 
 # Symlink starship configuration
 create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
