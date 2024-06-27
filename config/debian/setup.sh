@@ -11,6 +11,9 @@ sudo usermod -aG docker player1
 # Install essential packages
 sudo apt install -y curl git wget build-essential
 
+# Install unzip and fontconfig for JetBrains Mono Nerd Font
+sudo apt install -y unzip fontconfig
+
 # Install Docker and Docker Compose
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
@@ -36,8 +39,8 @@ sudo apt update
 sudo apt install gh
 
 # Install Google Cloud SDK
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb [signed-by=/usr/share/keyrings/cloud.google-archive-keyring.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google-archive-keyring.gpg
 sudo apt update && sudo apt install -y google-cloud-sdk
 
 # Install kubectl
@@ -56,8 +59,8 @@ bash Miniconda3-latest-Linux-x86_64.sh -b -p /home/player1/miniconda
 echo 'export PATH="/home/player1/miniconda/bin:$PATH"' >>/home/player1/.bashrc
 
 # Install Terraform
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install -y terraform
 
 # Install JetBrains Mono Nerd Font
