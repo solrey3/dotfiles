@@ -95,6 +95,10 @@ curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/d
 unzip JetBrainsMono.zip
 fc-cache -fv
 
+# Install DigitalOcean CLI (doctl)
+curl -sL https://github.com/digitalocean/doctl/releases/download/v1.64.0/doctl-1.64.0-linux-amd64.tar.gz | tar -xzv
+mv doctl /usr/local/bin
+
 # Ensure locale package is installed
 apt install -y locales
 
