@@ -41,6 +41,16 @@ tar -xzvf nvim-linux64.tar.gz
 mv nvim-linux64 /usr/local/neovim
 ln -s /usr/local/neovim/bin/nvim /usr/local/bin/nvim
 
+# Backup existing Neovim configuration
+mv /home/player1/.config/nvim{,.bak}
+mv /home/player1/.local/share/nvim{,.bak}
+mv /home/player1/.local/state/nvim{,.bak}
+mv /home/player1/.cache/nvim{,.bak}
+
+# Clone LazyVim starter configuration
+git clone https://github.com/LazyVim/starter /home/player1/.config/nvim
+rm -rf /home/player1/.config/nvim/.git
+
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
