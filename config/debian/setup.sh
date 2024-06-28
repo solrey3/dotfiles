@@ -16,7 +16,7 @@ chmod 700 /home/player1/.ssh
 chmod 600 /home/player1/.ssh/authorized_keys
 
 # Install essential packages
-apt install -y curl git wget build-essential
+apt install -y curl git wget build-essential software-properties-common
 
 # Install unzip and fontconfig for JetBrains Mono Nerd Font
 apt install -y unzip fontconfig
@@ -29,12 +29,17 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 apt install -y docker-compose
 
-# Install Alacritty, Tmux, Neovim, and Ripgrep
+# Install Alacritty, Tmux, and Ripgrep
 apt install -y cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 apt install -y alacritty
 apt install -y tmux
-apt install -y neovim
 apt install -y ripgrep
+
+# Install Neovim 0.9 from GitHub releases
+curl -LO https://github.com/neovim/neovim/releases/download/v0.9.0/nvim-linux64.tar.gz
+tar -xzvf nvim-linux64.tar.gz
+mv nvim-linux64 /usr/local/neovim
+ln -s /usr/local/neovim/bin/nvim /usr/local/bin/nvim
 
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -86,10 +91,15 @@ apt install -y locales
 # Generate and set locale
 locale-gen en_US.UTF-8
 echo -e "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" >/etc/default/locale
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 source /etc/default/locale
 
+# Set correct ownership for player1 home directory
+chown -R player1:player1 /home/player1
+
 # Clean up
-rm -f get-docker.sh awscliv2.zip Miniconda3-latest-Linux-x86_64.sh JetBrainsMono.zip
+rm -f get-docker.sh awscliv2.zip Miniconda3-latest-Linux-x86_64.sh JetBrainsMono.zip nvim-linux64.tar.gz
 
 # Source the .bashrc for miniconda to take effect
 source /home/player1/.bashrc
