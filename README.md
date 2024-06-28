@@ -1,12 +1,12 @@
 # dotfiles
-Config files galore! Some preferred, some default, config files mostly for macos bash env.
+
+Config files galore! for bash environments.
 
 ## About this Repo
-This repo contains configuration files, dockerfiles, and/or docker-compose files for services I use. I chose bash over zsh on macOS because, as a DevOps engineer, the systems I am responsible for are mostly Linux-based, which will (more times that not) have a bash shell. AAAAAAAND, beacuse I have an M2 chipped Mac that will always create conflicts, I try to avoid running any development environments on my mac and usually just spring up a cloud machine, ssh in, install deps, load this configuration, git clone some repos, and i'm off to work on what i need to work on. I need to be able to work and operate in as much a similar environemt as the machines I administer.
+
+This repo contains configuration files, scripts, docker files, and terraform code for services I use. I chose bash over zsh on macOS because, as a DevOps engineer, the systems I am responsible for are mostly Linux-based, which will (more times that not) have a bash shell. AAAAAAAND, beacuse I have an M2 chipped Mac that will always create conflicts, I try to avoid running any development environments on my mac and usually just spring up a cloud machine, ssh in, and i'm off to work on what i need to work on. At my level of business, it is highly recomeended to work and operate in as much a similar environment as the machines I administer.
 
 There is a simple update script here for setting up Bash, Alacritty, Tmux, and Neovim. This should be cross-platform, but i have only tested on macOS. I chose the following combination for the simple fact that VSCode started to feel clunky, bloated and uninspiring even if it had a plugin for everything. With Docker, this triple combination is all I will need to continue whatever I am working on. This includes installing necessary dependencies, configuring the environment, and ensuring everything works together seamlessly. I will eventually include full setup scripts for macos in brew, windows with chocolately, and debian in apt.  I usually prefer the simple over the extravagant (though precious is precious).
-
-In addition to the scripts, I have conf files, Dockerfiels, and docker-compose files for various services I setup.
 
 ### **1. Install Dependencies**
 
@@ -54,13 +54,13 @@ brew install --cask font-jetbrains-mono-nerd-font
 Make the script executable:
 
 ```bash
-chmod +x update-configs.sh
+chmod +x update.sh
 ```
 
 Run the update script:
 
 ```bash
-./update-configs.sh
+./update.sh
 ```
 
 ### **5. Summary**
@@ -69,6 +69,7 @@ Run the update script:
 - **Configure Alacritty**:
 
  Set up `alacritty.yml` with font, colors, shell, environment variables, and window settings.
+
 - **Configure Tmux**: Set up `tmux.conf` with custom key bindings, mouse support, and appearance settings.
 - **Review/Update Tmux Startup Script**: Automate Tmux session and window setup with `tmux_startup.sh`.
 - **Configure Neovim**: Set up LazyVim, `nvim-treesitter`, and other plugins.
