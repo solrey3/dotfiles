@@ -26,9 +26,9 @@ mkdir -p ~/.config/nvim
 # Fix locale issue
 sudo locale-gen en_US.UTF-8
 sudo bash -c 'echo -e "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" > /etc/default/locale'
+source /etc/default/locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-source /etc/default/locale
 
 # Remove bind commands from .bashrc
 sed -i '/bind/d' "$DOTFILES_CONFIG_DIR/bash/.bashrc"

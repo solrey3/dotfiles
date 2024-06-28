@@ -101,9 +101,9 @@ apt install -y locales
 # Generate and set locale
 locale-gen en_US.UTF-8
 echo -e "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" >/etc/default/locale
+source /etc/default/locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-source /etc/default/locale
 
 # Set correct ownership for player1 home directory
 chown -R player1:player1 /home/player1
