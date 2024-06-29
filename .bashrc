@@ -32,18 +32,28 @@ export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 
-# Load bash completions if available
-if [ -f /usr/local/etc/bash_completion ]; then
-	. /usr/local/etc/bash_completion
-elif [ -f /opt/homebrew/etc/bash_completion ]; then
-	. /opt/homebrew/etc/bash_completion
-fi
-
 # Set the terminal to handle backspace correctly
 stty erase '^?'
 
 # Environment Variables
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# Enable bash completion if available
+if [ -f /usr/local/etc/bash_completion ]; then
+	. /usr/local/etc/bash_completion
+elif [ -f /etc/bash_completion ]; then
+	. /etc/bash_completion
+elif [ -f /usr/share/bash-completion/bash_completion ]; then
+	. /usr/share/bash-completion/bash_completion
+fi
+
+# Append history list and avoid duplicate entries
+shopt -s histappend
+export HISTCONTROL=ignoredups:erasedups # no duplicate entries
+
+# Use up/down arrow keys to search history
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
 
 # Remove that annoying message from mac about using bash
 export BASH_SILENCE_DEPRECATION_WARNING=1

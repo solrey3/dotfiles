@@ -1,4 +1,3 @@
-
 # # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!
 # __conda_setup="$('/Users/budchris/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -14,7 +13,6 @@
 # unset __conda_setup
 # # <<< conda initialize <<<
 
-
 complete -C /opt/homebrew/bin/terraform terraform
 
 # source /Users/budchris/.docker/init-bash.sh || true # Added by Docker Desktop
@@ -23,5 +21,5 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # Source .bashrc if it exists
 if [ -f ~/.bashrc ]; then
-    source ~/.bashrc
+	source ~/.bashrc
 fi
