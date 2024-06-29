@@ -4,16 +4,16 @@ FROM debian:12
 # Set environment variables to non-interactive to avoid prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Copy the setup.sh script into the container
-COPY setup.sh /root/setup.sh
+# Copy the start.sh script into the container
+COPY start.sh /root/start.sh
 
-# Make sure setup.sh is executable
-RUN chmod +x /root/setup.sh
+# Make sure start.sh is executable
+RUN chmod +x /root/start.sh
 
-# Run the setup script
+# Run the start script
 RUN apt-get update && \
     apt-get install -y sudo curl && \
-    /root/setup.sh && \
+    /root/start.sh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

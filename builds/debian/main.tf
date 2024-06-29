@@ -31,9 +31,9 @@ resource "digitalocean_droplet" "workstation" {
     inline = [
       "apt-get update",
       "apt-get install -y sudo",
-      "curl -O https://raw.githubusercontent.com/solrey3/dotfiles/main/builds/debian/setup.sh",
-      "chmod +x setup.sh",
-      "./setup.sh"
+      "curl -O https://raw.githubusercontent.com/solrey3/dotfiles/main/builds/debian/start.sh",
+      "chmod +x start.sh",
+      "./start.sh"
     ]
   }
 }
