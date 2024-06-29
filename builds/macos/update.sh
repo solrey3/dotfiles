@@ -5,7 +5,7 @@ echo "Updating starship..."
 sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
 # Define dotfiles directory
-DOTFILES_DIR="$HOME/dotfiles/config"
+DOTFILES_DIR="$HOME/dotfiles"
 
 # Create the .config directory if it doesn't exist
 mkdir -p ~/.config
@@ -40,27 +40,27 @@ copy_file() {
 }
 
 # Symlink bash configuration
-create_symlink "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
-create_symlink "$DOTFILES_DIR/bash/.bash_profile" "$HOME/.bash_profile"
+create_symlink "$DOTFILES_DIR/.bashrc" "$HOME/.bashrc"
+create_symlink "$DOTFILES_DIR/.bash_profile" "$HOME/.bash_profile"
 
 # Symlink zsh configuration
-create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 
 # Copy tmux configuration
-copy_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
-create_symlink "$DOTFILES_DIR/tmux/tmux_startup.sh" "$HOME/tmux_startup.sh"
+create_symlink "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
+create_symlink "$DOTFILES_DIR/tmux_startup.sh" "$HOME/tmux_startup.sh"
 
 # Symlink alacritty configuration
-create_symlink "$DOTFILES_DIR/alacritty/alacritty.yml" "$HOME/.config/alacritty.yml"
+create_symlink "$DOTFILES_DIR/.config/alacritty.yml" "$HOME/.config/alacritty.yml"
 
 # Symlink vim configuration
-create_symlink "$DOTFILES_DIR/vim/.vimrc" "$HOME/.vimrc"
+create_symlink "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 
 # Copy all files and directories in nvim directory
-copy_file "$DOTFILES_DIR/nvim/" "$HOME/.config/nvim"
+copy_file "$DOTFILES_DIR/.config/nvim/" "$HOME/.config/nvim"
 
 # Symlink starship configuration
-create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+create_symlink "$DOTFILES_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
 
 # Install Neovim plugins using LazyVim
 echo "Installing Neovim plugins..."

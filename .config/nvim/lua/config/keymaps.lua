@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
+-- is not what someone will guess wit:hout a bit more experience.
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
@@ -35,7 +35,7 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 
 -- Define a global function to insert the timestamp
 function _G.insert_timestamp()
-	local ts = os.date("%Y-%m-%d %H:%M:%S")
+	local ts = os.date("%Y%m%d%H%M%S")
 	-- Use vim.api.nvim_put to insert the timestamp text
 	vim.api.nvim_put({ ts }, "c", true, true)
 end
