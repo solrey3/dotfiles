@@ -6,15 +6,6 @@ install_starship() {
 	sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 }
 
-# Function to install stow if not already installed
-install_stow() {
-	if ! command -v stow &>/dev/null; then
-		echo "stow could not be found, installing..."
-		sudo apt update
-		sudo apt install -y stow
-	fi
-}
-
 # Function to update Neovim plugins using LazyVim
 update_neovim_plugins() {
 	echo "Installing Neovim plugins..."
@@ -37,13 +28,8 @@ chmod 700 /home/player1/.ssh
 chmod 600 /home/player1/.ssh/authorized_keys
 
 # Install essential packages
-apt install -y curl git wget build-essential software-properties-common
-
 # Install unzip and fontconfig for JetBrains Mono Nerd Font
-apt install -y unzip fontconfig
-
-# Install rsync
-apt install -y rsync
+apt install -y curl git wget build-essential software-properties-common stow rsync unzip fontconfig
 
 # Install Docker and Docker Compose
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -120,15 +106,15 @@ fc-cache -fv
 curl -sL https://github.com/digitalocean/doctl/releases/download/v1.64.0/doctl-1.64.0-linux-amd64.tar.gz | tar -xzv
 mv doctl /usr/local/bin
 
-# Ensure locale package is installed
-apt install -y locales
+# # Ensure locale package is installed
+# apt install -y locales
 
-# Generate and set locale
-locale-gen en_US.UTF-8
-echo -e "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" >/etc/default/locale
-source /etc/default/locale
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+# # Generate and set locale
+# locale-gen en_US.UTF-8
+# echo -e "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" >/etc/default/locale
+# source /etc/default/locale
+# export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
 
 # Set correct ownership for player1 home directory
 chown -R player1:player1 /home/player1
@@ -142,9 +128,6 @@ source /home/player1/.bashrc
 # Install starship
 install_starship
 
-# Install stow
-install_stow
-
 # Define dotfiles directory
 DOTFILES_DIR="/home/player1/dotfiles"
 
@@ -152,6 +135,7 @@ DOTFILES_DIR="/home/player1/dotfiles"
 if [ ! -d "$DOTFILES_DIR" ]; then
 	echo "dotfiles directory does not exist, cloning..."
 	git clone https://github.com/solrey3/dotfiles "$DOTFILES_DIR"
+	chown -R player1:player1 "$DOTFILES_DIR"
 fi
 
 # Use stow to create symlinks for all configurations
