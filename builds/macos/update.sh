@@ -1,19 +1,61 @@
 #!/bin/bash
 
-# Update starship
-echo "Updating starship..."
-sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+# Function to check if a command exists and install it using brew if it doesn't
+check_and_install() {
+	if ! command -v $1 &>/dev/null; then
+		echo "$1 could not be found, installing..."
+		brew install $1
+	else
+		echo "$1 is already installed."
+	fi
+}
+
+# Function to check if a Homebrew package is installed and install it if it isn't
+check_brew_install() {
+	if ! brew list $1 &>/dev/null; then
+		echo "$1 is not installed via Homebrew, installing..."
+		brew install $1
+	else
+		echo "$1 is already installed via Homebrew."
+	fi
+}
+
+# Check for Homebrew and install if not found
+if ! command -v brew &>/dev/null; then
+	echo "Homebrew could not be found, installing..."
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+	echo "Homebrew is already installed."
+fi
+
+# Update Homebrew and upgrade installed packages
+echo "Updating Homebrew..."
+brew update
+
+echo "Upgrading installed packages..."
+brew upgrade
+
+# Check and install necessary tools
+check_and_install git
+check_and_install stow
+check_brew_install neovim
+check_and_install alacritty
+check_and_install tmux
+check_and_install bash
+check_brew_install ripgrep
 
 # Define dotfiles directory
 DOTFILES_DIR="$HOME/dotfiles"
 
-# Create .stow-local-ignore file to exclude certain files and directories
-cat <<EOL >$DOTFILES_DIR/.stow-local-ignore
-.git
-builds
-README.md
-LICENSE
-EOL
+# Clone the dotfiles repository if it does not exist
+if [ ! -d "$DOTFILES_DIR" ]; then
+	echo "Cloning dotfiles repository..."
+	git clone https://github.com/solrey3/dotfiles "$DOTFILES_DIR"
+fi
+
+# Update starship
+echo "Updating starship..."
+sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
 # Use stow to create symlinks for all configurations
 stow -d "$DOTFILES_DIR" -t "$HOME" .
