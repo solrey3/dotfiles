@@ -10,72 +10,69 @@ I chose bash over zsh on macOS because, as a DevOps engineer, the systems I am r
 
 There are macos and debian scripts for update and setup that . I chose the following combination for the simple fact that VSCode started to feel clunky, bloated and uninspiring even if it had a plugin for everything. With Docker, this triple combination is all I will need to continue whatever I am working on. This includes installing necessary dependencies, configuring the environment, and ensuring everything works together seamlessly. I will eventually include full setup scripts for macos in brew, windows with chocolately, and debian in apt.  I usually prefer the simple over the extravagant (though precious is precious).
 
-### **1. Install Dependencies**
+# Setup and Update Instructions
 
-#### **Homebrew**
+## Prerequisites
 
-If you don't have Homebrew installed, install it first:
+### macOS
+- Homebrew (Package Manager)
+- Git
+- Neovim
+- Starship Prompt
+- Xcode Command Line Tools
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+### Prerequisites Installation
 
-#### **Xcode Command Line Tools**
+1. **Install Homebrew:**
 
-Install the Xcode Command Line Tools:
+    ```sh
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
 
-```bash
-xcode-select --install
-```
+2. **Install Xcode Command Line Tools:**
 
-#### **Essential Packages**
+    ```sh
+    xcode-select --install
+    ```
 
-Use Homebrew to install essential packages:
+3. **Install Git:**
 
-```bash
-brew install alacritty tmux neovim git ripgrep
-```
+    ```sh
+    brew install git
+    ```
 
-### **2. Install JetBrains Mono Nerd Font**
+4. **Install Neovim:**
 
-#### **Using Homebrew**
+    ```sh
+    brew install neovim
+    ```
 
-```bash
-brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono-nerd-font
-```
+5. **Install Starship Prompt:**
 
-### **3. Configure Neovim**
+    ```sh
+    brew install starship
+    ```
 
-#### **Using LazyVim**
+## Running the Update Script
 
-1. **Install LazyVim**: Follow the LazyVim setup instructions if not already done.
+1. **Clone the dotfiles repository:**
 
-### **4. Run Update Script**
+    ```sh
+    git clone https://github.com/solrey3/dotfiles ~/dotfiles
+    ```
 
-Make the script executable:
+2. **Run the update script:**
 
-```bash
-chmod +x update.sh
-```
+    ```sh
+    cd ~/dotfiles
+    ./update.sh
+    ```
 
-Run the update script:
+### What the Update Script Does
 
-```bash
-./update.sh
-```
-
-### **5. Summary**
-
-- **Install Dependencies**: Install Alacritty, Tmux, Neovim, ripgrep, and JetBrains Mono Nerd Font.
-- **Configure Alacritty**:
-
- Set up `alacritty.yml` with font, colors, shell, environment variables, and window settings.
-
-- **Configure Tmux**: Set up `tmux.conf` with custom key bindings, mouse support, and appearance settings.
-- **Review/Update Tmux Startup Script**: Automate Tmux session and window setup with `tmux_startup.sh`.
-- **Configure Neovim**: Set up LazyVim, `nvim-treesitter`, and other plugins.
-- **Configure Starship Prompt**: Customize the prompt with `starship.toml` and include the Tokyo Night theme and date-time format.
-- **Update Script**: Create an `update-config.sh` script to ensure configurations are up-to-date and correctly symlinked.
-
-By following these steps, you will have a fully configured development environment using Alacritty, Tmux, and Neovim, with a customized Starship prompt, all set up to work seamlessly on macOS and bash shell.
+- Checks if Oh My Zsh is installed, and installs it if not.
+- Updates Starship prompt.
+- Installs `stow` if not already installed.
+- Clones the dotfiles repository if it does not exist.
+- Uses `stow` to create symlinks for all configurations.
+- Updates Neovim plugins using LazyVim.
