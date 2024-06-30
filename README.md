@@ -65,12 +65,11 @@ There are macos and debian scripts for update and setup that . I chose the follo
 
     ```sh
     cd ~/dotfiles
-    ./update.sh
+    ./macos/update.sh
     ```
 
 ### What the Update Script Does
 
-- Checks if Oh My Zsh is installed, and installs it if not.
 - Updates Starship prompt.
 - Installs `stow` if not already installed.
 - Clones the dotfiles repository if it does not exist.
