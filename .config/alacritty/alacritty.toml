@@ -1,7 +1,7 @@
 # Font settings
 [font]
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
-size = 14.0
+size = 16.0
 
 # Colors
 [colors]
