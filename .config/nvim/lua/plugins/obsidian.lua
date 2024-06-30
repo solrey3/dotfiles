@@ -39,6 +39,14 @@ return {
 				return datetime
 			end
 		end,
+
+		-- Keybinding for :ObsidianNew with a title
+		vim.api.nvim_set_keymap(
+			"n",
+			"<leader>on",
+			':lua require("obsidian").new_note()<CR>',
+			{ noremap = true, silent = true }
+		),
 	},
 }
 
