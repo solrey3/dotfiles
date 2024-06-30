@@ -19,12 +19,12 @@ return {
 		workspaces = {
 			{
 				name = "Player2",
-				path = "~/Nextcloud/obsidian/vault/Player2",
+				path = "~/Nextcloud/obsidian/player2",
 			},
 		},
 
 		templates = {
-			folder = "~/Nextcloud/obsidian/vault/Player2/templates",
+			folder = "~/Nextcloud/obsidian/player2/templates",
 			date_format = "%Y-%m-%d-%a",
 			time_format = "%H:%M:%S",
 		},

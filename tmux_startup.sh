@@ -30,7 +30,7 @@ create_session "Work" "Local" "cd ~/Projects/sn; nvim"
 create_window "Work" "Remote" "ssh player1@workstation"
 
 # Create Player2 session with 1 window
-create_session "Player2" "Main" "cd ~/Nextcloud/obsidian/vault/Player2"
+create_session "Player2" "Main" "cd ~/Nextcloud/obsidian/player2"
 
 # Attach to the Home session by default
 tmux attach-session -t Home
