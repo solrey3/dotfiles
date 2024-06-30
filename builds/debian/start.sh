@@ -57,7 +57,7 @@ apt install -y tmux
 apt install -y ripgrep
 
 # Install Neovim 0.9 from GitHub releases
-curl -LO https://github.com/neovim/neovim/releases/download/v0.9.0/nvim-linux64.tar.gz
+curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
 tar -xzvf nvim-linux64.tar.gz
 mv nvim-linux64 /usr/local/neovim
 ln -s /usr/local/neovim/bin/nvim /usr/local/bin/nvim

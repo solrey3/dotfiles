@@ -13,7 +13,6 @@ return {
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
-
 		-- see below for full list of optional dependencies 👇
 	},
 	opts = {
@@ -24,6 +23,24 @@ return {
 			},
 		},
 
-		-- see below for full list of options 👇
+		templates = {
+			folder = "~/Nextcloud/obsidian/vault/Player2/templates",
+			date_format = "%Y-%m-%d-%a",
+			time_format = "%H:%M:%S",
+		},
+
+		-- Custom function to generate filename with datetime and optional title
+		note_id_func = function(title)
+			local datetime = os.date("%Y%m%d%H%M%S")
+			if title then
+				title = title:gsub("[^%w%s-]", ""):gsub("%s+", "-"):lower()
+				return datetime .. "-" .. title
+			else
+				return datetime
+			end
+		end,
 	},
 }
+
+-- Keybinding for :ObsidianNew with a title
+-- vim.api.nvim_set_keymap('n', '<leader>on', ':lua require("obsidian").new_note()<CR>', { noremap = true, silent = true })
