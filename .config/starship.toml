@@ -12,7 +12,6 @@ $rust\
 $golang\
 $php\
 [](fg:#212736 bg:#1d2230)\
-$gcloud\
 $time\
 [ ](fg:#1d2230)\
 \n$character"""
@@ -64,7 +63,3 @@ time_format = "%F %T" # Hour:Minute Format
 style = "bg:#1d2230"
 format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
 
-[gcloud]
-command = "gcloud info --format='value(config.account)'; gcloud config get-value project"
-style = "bg:#212736"
-format = '[[  $output ](fg:#769ff0 bg:#212736)]($style)'

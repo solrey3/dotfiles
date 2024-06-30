@@ -1,20 +1,24 @@
 # Font settings
 [font]
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
-size = 12.0
+size = 14.0
 
 # Colors
 [colors]
-primary = { background = "#282c34", foreground = "#ffffff" }
+  [colors.primary]
+    background = "#282c34"
+    foreground = "#ffffff"
 
 # Shell configuration
 [shell]
 program = "/bin/bash"
-args = ["-1"]
+args = ["-l"]  # Changed "-1" to "-l" for login shell
 
+# Environment variables
 [env]
 TERM = "xterm-256color"
 
+# Window settings
 [window]
 padding = { x = 24, y = 24 }
 decorations = "transparent"  # Transparent borders
