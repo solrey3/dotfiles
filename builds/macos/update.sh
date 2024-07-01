@@ -36,13 +36,13 @@ echo "Upgrading installed packages..."
 brew upgrade
 
 # Check and install necessary tools
+check_and_install bash
 check_and_install git
 check_and_install stow
-check_brew_install neovim
-check_and_install alacritty
 check_and_install tmux
-check_and_install bash
+check_and_install alacritty
 check_brew_install ripgrep
+check_brew_install neovim
 
 # Define dotfiles directory
 DOTFILES_DIR="$HOME/dotfiles"
