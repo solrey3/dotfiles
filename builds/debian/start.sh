@@ -58,6 +58,20 @@ else
 	echo "Docker is already installed."
 fi
 
+# Check and install JetBrains Mono Nerd Font if not installed
+FONT_CHECK=$(sudo -u player1 fc-list | grep -E "JetBrains.*.ttf" | wc -l)
+if [ "$FONT_CHECK" -eq 0 ]; then
+	echo "JetBrains Mono Nerd Font not found, installing..."
+	sudo -u player1 mkdir -p /home/player1/.local/share/fonts
+	cd /home/player1/.local/share/fonts
+	sudo -u player1 curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+	sudo -u player1 unzip -o JetBrainsMono.zip
+	sudo -u player1 fc-cache -fv
+	rm -f JetBrainsMono.zip
+else
+	echo "JetBrains Mono Nerd Font is already installed."
+fi
+
 # Check if Neovim is installed, if not install Neovim, backup config, and clone LazyVim
 if ! command -v nvim &>/dev/null; then
 	curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
@@ -146,18 +160,6 @@ if ! command -v terraform &>/dev/null; then
 	apt update && apt install -y terraform
 else
 	echo "Terraform is already installed."
-fi
-
-# Check and install JetBrains Mono Nerd Font if not installed
-if [ ! -f "/home/player1/.local/share/fonts/JetBrainsMono-Regular.ttf" ]; then
-	mkdir -p /home/player1/.local/share/fonts
-	cd /home/player1/.local/share/fonts
-	curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
-	unzip JetBrainsMono.zip
-	fc-cache -fv
-	rm -f JetBrainsMono.zip
-else
-	echo "JetBrains Mono Nerd Font is already installed."
 fi
 
 # Check and install DigitalOcean CLI (doctl) if not installed
