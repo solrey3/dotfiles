@@ -144,7 +144,7 @@ else
 fi
 
 # Check and install Miniconda if not installed
-if [ ! -d "/home/player1/miniconda" ]; then
+if ! command -v conda &>/dev/null; then
 	curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 	bash Miniconda3-latest-Linux-x86_64.sh -b -p /home/player1/miniconda
 	echo 'export PATH="/home/player1/miniconda/bin:$PATH"' >>/home/player1/.bashrc

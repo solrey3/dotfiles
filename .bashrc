@@ -8,21 +8,20 @@ if [ -f '/Users/budchris/google-cloud-sdk/completion.bash.inc' ]; then . '/Users
 
 # Aliases
 alias hist="history 1"
-alias 2b="cd ~/Nextcloud/obsidian/player2; nvim"
 
 # Completion for terraform
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/budchris/miniconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
+__conda_setup="$('/home/player1/miniconda/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
 	eval "$__conda_setup"
 else
-	if [ -f "/Users/budchris/miniconda3/etc/profile.d/conda.sh" ]; then
-		. "/Users/budchris/miniconda3/etc/profile.d/conda.sh"
+	if [ -f "/home/player1/miniconda/etc/profile.d/conda.sh" ]; then
+		. "/home/player1/miniconda/etc/profile.d/conda.sh"
 	else
-		export PATH="/Users/budchris/miniconda3/bin:$PATH"
+		export PATH="/home/player1/miniconda/bin:$PATH"
 	fi
 fi
 unset __conda_setup
@@ -62,3 +61,8 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # Set STARSHIP_CONFIG environment variable
 export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init bash)"
+
+# Use `xclip` for system clipboard integration
+# bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+
+# export PATH="/home/player1/miniconda/bin:$PATH"  # commented out by conda initialize
