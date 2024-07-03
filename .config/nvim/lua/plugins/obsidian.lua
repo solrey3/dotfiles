@@ -3,13 +3,10 @@ return {
 	version = "*", -- recommended, use latest release instead of latest commit
 	lazy = true,
 	ft = "markdown",
-	-- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-	-- event = {
-	--   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-	--   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
-	--   "BufReadPre path/to/my-vault/**.md",
-	--   "BufNewFile path/to/my-vault/**.md",
-	-- },
+	-- Load the plugin only if the directory exists
+	cond = function()
+		return vim.fn.isdirectory(vim.fn.expand("~/Nextcloud/obsidian/player2")) == 1
+	end,
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
@@ -20,6 +17,14 @@ return {
 			{
 				name = "Player2",
 				path = "~/Nextcloud/obsidian/player2",
+			},
+			{
+				name = "Vault",
+				path = "~/Nextcloud/obsidian/vault",
+			},
+			{
+				name = "Notion",
+				path = "~/Nextcloud/obsidian/notion",
 			},
 		},
 
@@ -49,6 +54,3 @@ return {
 		),
 	},
 }
-
--- Keybinding for :ObsidianNew with a title
--- vim.api.nvim_set_keymap('n', '<leader>on', ':lua require("obsidian").new_note()<CR>', { noremap = true, silent = true })
