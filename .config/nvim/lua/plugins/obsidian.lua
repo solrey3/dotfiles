@@ -30,8 +30,8 @@ return {
 
 		templates = {
 			folder = "~/Nextcloud/obsidian/player2/templates",
-			date_format = "%Y-%m-%d-%a",
-			time_format = "%H:%M:%S",
+			date_format = "%Y-%m-%d",
+			time_format = "%Y%m%d%H%M%S",
 		},
 
 		-- Custom function to generate filename with datetime and optional title
@@ -46,11 +46,13 @@ return {
 		end,
 
 		-- Keybinding for :ObsidianNew with a title
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>on",
-			':lua require("obsidian").new_note()<CR>',
-			{ noremap = true, silent = true }
-		),
+		vim.api.nvim_set_keymap("n", "<leader>on", ":ObsidianTemplate<CR>", { noremap = true, silent = true }),
+
+		-- Either 'wiki' or 'markdown'.
+		preferred_link_style = "markdown",
+
+		-- Optional, boolean or a function that takes a filename and returns a boolean.
+		-- `true` indicates that you don't want obsidian.nvim to manage frontmatter.
+		disable_frontmatter = true,
 	},
 }
