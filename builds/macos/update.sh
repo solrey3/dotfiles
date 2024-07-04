@@ -2,30 +2,30 @@
 
 # Function to check if a command exists and install it using brew if it doesn't
 check_and_install() {
-	if ! command -v $1 &>/dev/null; then
-		echo "$1 could not be found, installing..."
-		brew install $1
-	else
-		echo "$1 is already installed."
-	fi
+  if ! command -v $1 &>/dev/null; then
+    echo "$1 could not be found, installing..."
+    brew install $1
+  else
+    echo "$1 is already installed."
+  fi
 }
 
 # Function to check if a Homebrew package is installed and install it if it isn't
 check_brew_install() {
-	if ! brew list $1 &>/dev/null; then
-		echo "$1 is not installed via Homebrew, installing..."
-		brew install $1
-	else
-		echo "$1 is already installed via Homebrew."
-	fi
+  if ! brew list $1 &>/dev/null; then
+    echo "$1 is not installed via Homebrew, installing..."
+    brew install $1
+  else
+    echo "$1 is already installed via Homebrew."
+  fi
 }
 
 # Check for Homebrew and install if not found
 if ! command -v brew &>/dev/null; then
-	echo "Homebrew could not be found, installing..."
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo "Homebrew could not be found, installing..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-	echo "Homebrew is already installed."
+  echo "Homebrew is already installed."
 fi
 
 # Update Homebrew and upgrade installed packages
@@ -43,14 +43,15 @@ check_and_install tmux
 check_and_install alacritty
 check_brew_install ripgrep
 check_brew_install neovim
+check_brew_install bitwarden-cli
 
 # Define dotfiles directory
 DOTFILES_DIR="$HOME/dotfiles"
 
 # Clone the dotfiles repository if it does not exist
 if [ ! -d "$DOTFILES_DIR" ]; then
-	echo "Cloning dotfiles repository..."
-	git clone https://github.com/solrey3/dotfiles "$DOTFILES_DIR"
+  echo "Cloning dotfiles repository..."
+  git clone https://github.com/solrey3/dotfiles "$DOTFILES_DIR"
 fi
 
 # Update starship

@@ -8,6 +8,7 @@ if [ -f '/Users/budchris/google-cloud-sdk/completion.bash.inc' ]; then . '/Users
 
 # Aliases
 alias hist="history 1"
+alias 2b="cd ~/Nextcloud/obsidian; nvim"
 
 # Completion for terraform
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
@@ -16,13 +17,13 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/player1/miniconda/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
-	eval "$__conda_setup"
+  eval "$__conda_setup"
 else
-	if [ -f "/home/player1/miniconda/etc/profile.d/conda.sh" ]; then
-		. "/home/player1/miniconda/etc/profile.d/conda.sh"
-	else
-		export PATH="/home/player1/miniconda/bin:$PATH"
-	fi
+  if [ -f "/home/player1/miniconda/etc/profile.d/conda.sh" ]; then
+    . "/home/player1/miniconda/etc/profile.d/conda.sh"
+  else
+    export PATH="/home/player1/miniconda/bin:$PATH"
+  fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
@@ -40,11 +41,11 @@ export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 # Enable bash completion if available
 if [ -f /usr/local/etc/bash_completion ]; then
-	. /usr/local/etc/bash_completion
+  . /usr/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
+  . /etc/bash_completion
 elif [ -f /usr/share/bash-completion/bash_completion ]; then
-	. /usr/share/bash-completion/bash_completion
+  . /usr/share/bash-completion/bash_completion
 fi
 
 # Append history list and avoid duplicate entries
