@@ -20,6 +20,24 @@ check_brew_install() {
   fi
 }
 
+# Function to install Docker and Docker Compose
+install_docker() {
+  if ! command -v docker &>/dev/null; then
+    echo "Docker could not be found, installing..."
+    brew install --cask docker
+    echo "Please start Docker from the Applications folder and allow it to complete installation."
+  else
+    echo "Docker is already installed."
+  fi
+
+  if ! command -v docker-compose &>/dev/null; then
+    echo "Docker Compose could not be found, installing..."
+    brew install docker-compose
+  else
+    echo "Docker Compose is already installed."
+  fi
+}
+
 # Check for Homebrew and install if not found
 if ! command -v brew &>/dev/null; then
   echo "Homebrew could not be found, installing..."
@@ -44,6 +62,9 @@ check_and_install alacritty
 check_brew_install ripgrep
 check_brew_install neovim
 check_brew_install bitwarden-cli
+
+# Install Docker and Docker Compose
+install_docker
 
 # Define dotfiles directory
 DOTFILES_DIR="$HOME/dotfiles"
