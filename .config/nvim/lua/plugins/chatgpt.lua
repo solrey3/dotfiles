@@ -6,7 +6,8 @@ return {
 		event = "VeryLazy",
 		config = function()
 			require("chatgpt").setup({
-				api_key_cmd = "bw get password OpenAINeovim",
+				-- Bitwarden isn't good for this.
+				-- api_key_cmd = "bw get password OpenAINeovim",
 			})
 		end,
 		dependencies = {
@@ -14,6 +15,10 @@ return {
 			"nvim-lua/plenary.nvim",
 			"folke/trouble.nvim",
 			"nvim-telescope/telescope.nvim",
+		},
+		extra_curl_params = {
+			"-H",
+			"Origin: https://openai.com",
 		},
 	},
 }

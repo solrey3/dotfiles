@@ -58,6 +58,7 @@ check_and_install bash
 check_and_install git
 check_and_install stow
 check_and_install tmux
+check_and_install tokei
 check_and_install alacritty
 check_brew_install ripgrep
 check_brew_install neovim
