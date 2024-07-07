@@ -17,6 +17,7 @@ return {
 	{ "hrsh7th/cmp-cmdline" },
 	{ "hrsh7th/vim-vsnip" },
 	{ "hrsh7th/cmp-vsnip" },
+	{ "rafamadriz/friendly-snippets" },
 
 	-- Additional plugins for specific languages
 	{ "nvim-treesitter/playground" },

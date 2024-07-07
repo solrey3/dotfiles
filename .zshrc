@@ -1,53 +1,64 @@
-# Path to your oh-my-zsh installation (if using oh-my-zsh).
-# export ZSH="$HOME/.oh-my-zsh"
+# ~/.zshrc
 
-# Set name of the theme to load.
-# ZSH_THEME="robbyrussell"
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/budchris/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/budchris/google-cloud-sdk/path.zsh.inc'; fi
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/budchris/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/budchris/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# Aliases
+alias hist="history 1"
+alias 2b="cd ~/Nextcloud/obsidian; nvim"
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to use command execution time stamps.
-# HIST_STAMPS="yyyy-mm-dd"
-
-# Source oh-my-zsh.
-# source $ZSH/oh-my-zsh.sh
-
-# Set PATH.
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
-
-# Aliases.
-alias ll="ls -alF"
-alias la="ls -A"
-alias l="ls -CF"
-
-# Load NVM (Node Version Manager).
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# Enable command autocompletion.
+# Completion for terraform
 autoload -U compinit
 compinit
+compdef _terraform terraform=/opt/homebrew/bin/terraform
 
-# Custom prompt.
-PROMPT='%n@%m %1~ %# '
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/budchris/miniconda/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+if [ $? -eq 0 ]; then
+  eval "$__conda_setup"
+else
+  if [ -f "/Users/budchris/miniconda/etc/profile.d/conda.sh" ]; then
+    . "/Users/budchris/miniconda/etc/profile.d/conda.sh"
+  else
+    export PATH="/Users/budchris/miniconda/bin:$PATH"
+  fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
-# Enable Zsh autosuggestions (optional, requires installation).
-# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Add $HOME/bin to PATH
+export PATH="$HOME/bin:$PATH"
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
 
-# Enable Zsh syntax highlighting (optional, requires installation).
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Set the terminal to handle backspace correctly
+stty erase '^?'
 
-# Add any additional configuration below this line.
+# Environment Variables
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# Enable zsh completion if available
+if [ -f /usr/local/share/zsh/site-functions/_bash_completion ]; then
+  . /usr/local/share/zsh/site-functions/_bash_completion
+elif [ -f /usr/share/zsh/functions/Completion ]; then
+  . /usr/share/zsh/functions/Completion
+fi
+
+# Append history list and avoid duplicate entries
+setopt APPEND_HISTORY
+HISTCONTROL=ignoredups:erasedups # no duplicate entries
+
+# Use up/down arrow keys to search history
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+# Remove that annoying message from mac about using bash
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Set STARSHIP_CONFIG environment variable
+export STARSHIP_CONFIG=~/.config/starship.toml
+eval "$(starship init zsh)"
