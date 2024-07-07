@@ -45,9 +45,6 @@ return {
 			end
 		end,
 
-		-- Keybinding for :ObsidianNew with a title
-		vim.api.nvim_set_keymap("n", "<leader>on", ":ObsidianTemplate<CR>", { noremap = true, silent = true }),
-
 		-- Either 'wiki' or 'markdown'.
 		preferred_link_style = "markdown",
 
@@ -55,4 +52,60 @@ return {
 		-- `true` indicates that you don't want obsidian.nvim to manage frontmatter.
 		disable_frontmatter = true,
 	},
+
+	config = function(_, opts)
+		-- Function to replace template variables with actual values
+		local function render_template(content, vars)
+			vars = vim.tbl_extend("force", {
+				date = os.date("%Y-%m-%d"),
+				time = os.date("%H:%M:%S"),
+				datetime = os.date("%Y-%m-%d %H:%M:%S"),
+				uuid = vim.fn.systemlist("uuidgen")[1],
+			}, vars or {})
+
+			return (content:gsub("{{(.-)}}", function(key)
+				return vars[key] or "{{" .. key .. "}}"
+			end))
+		end
+
+		-- Function to create a new note and apply a template
+		_G.CreateObsidianNoteWithTemplate = function()
+			local template_dir = vim.fn.expand("~/Nextcloud/obsidian/player2/templates/")
+			local templates = vim.fn.globpath(template_dir, "*.md", false, true)
+			if #templates == 0 then
+				print("No templates found in " .. template_dir)
+				return
+			end
+
+			local choices = {}
+			for _, template in ipairs(templates) do
+				table.insert(choices, vim.fn.fnamemodify(template, ":t:r"))
+			end
+
+			vim.ui.select(choices, { prompt = "Choose a template:" }, function(choice)
+				if choice then
+					local datetime = os.date("%Y%m%d%H%M%S")
+					local filename = vim.fn.expand("~/Nextcloud/obsidian/player2/") .. datetime .. ".md"
+					vim.cmd("e " .. filename)
+
+					-- Read template content and replace variables
+					local template_content = table.concat(vim.fn.readfile(template_dir .. choice .. ".md"), "\n")
+					local rendered_content = render_template(template_content, { title = datetime })
+					vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(rendered_content, "\n"))
+
+					print("Created note: " .. filename .. " with template: " .. choice)
+				else
+					print("Template selection cancelled")
+				end
+			end)
+		end
+
+		-- Keybinding for creating a new note with a template
+		vim.api.nvim_set_keymap(
+			"n",
+			"<leader>on",
+			":lua CreateObsidianNoteWithTemplate()<CR>",
+			{ noremap = true, silent = true }
+		)
+	end,
 }
