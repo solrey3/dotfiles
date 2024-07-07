@@ -8,7 +8,7 @@ if [ -f '/home/player1/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/b
 
 # Aliases
 alias hist="history 1"
-alias 2b="cd ~/Nextcloud/obsidian; nvim"
+alias p2="cd ~/Nextcloud/obsidian/player2; nvim"
 
 # Completion for terraform
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
