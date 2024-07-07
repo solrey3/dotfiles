@@ -107,5 +107,39 @@ return {
 			":lua CreateObsidianNoteWithTemplate()<CR>",
 			{ noremap = true, silent = true }
 		)
+
+		-- Function to save and rename the current file based on markdown properties
+		_G.SaveAndRenameMarkdownFile = function()
+			local bufnr = vim.api.nvim_get_current_buf()
+			local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+			local title
+
+			for _, line in ipairs(lines) do
+				if line:match("^title:%s") then
+					title = line:gsub("^title:%s*", "")
+					break
+				end
+			end
+
+			if not title then
+				print("No title property found in the markdown file.")
+				return
+			end
+
+			title = title:gsub("[^%w%s-]", ""):gsub("%s+", "-"):lower()
+			local date = os.date("%Y-%m-%d")
+			local new_filename = date .. "-" .. title .. ".md"
+			local filepath = vim.fn.expand("%:p:h") .. "/" .. new_filename
+			vim.cmd("write " .. filepath)
+			print("File saved and renamed to: " .. new_filename)
+		end
+
+		-- Keybinding for saving and renaming the current file
+		vim.api.nvim_set_keymap(
+			"n",
+			"<leader>ob",
+			":lua SaveAndRenameMarkdownFile()<CR>",
+			{ noremap = true, silent = true }
+		)
 	end,
 }
