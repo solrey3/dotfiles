@@ -41,3 +41,6 @@ function _G.insert_timestamp()
 end
 -- Set up the keymap for insert mode to trigger the function
 vim.api.nvim_set_keymap("i", "<C-t>", "<Esc>:lua insert_timestamp()<CR>a", { noremap = true, silent = true })
+
+-- Mapping <leader>d to open the dashboard
+vim.api.nvim_set_keymap("n", "<leader>d", "<cmd>Dashboard<CR>", { noremap = true, silent = true })
