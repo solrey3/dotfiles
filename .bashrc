@@ -1,10 +1,10 @@
 # ~/.bashrc
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/player1/google-cloud-sdk/path.bash.inc' ]; then . '/Users/budchris/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/Users/budchris/google-cloud-sdk/path.bash.inc' ]; then . '/Users/budchris/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/player1/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/budchris/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '/Users/budchris/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/budchris/google-cloud-sdk/completion.bash.inc'; fi
 
 # Aliases
 alias hist="history 1"
@@ -13,25 +13,11 @@ alias p2="cd ~/Nextcloud/obsidian/player2; nvim"
 # Completion for terraform
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/player1/miniconda/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "/home/player1/miniconda/etc/profile.d/conda.sh" ]; then
-    . "/home/player1/miniconda/etc/profile.d/conda.sh"
-  else
-    export PATH="/home/player1/miniconda/bin:$PATH"
-  fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 # Add $HOME/bin to PATH
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
+export PATH="$HOME/anaconda3/bin:$PATH"
 
 # Set the terminal to handle backspace correctly
 stty erase '^?'
@@ -66,4 +52,4 @@ eval "$(starship init bash)"
 # Use `xclip` for system clipboard integration
 # bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
 
-# export PATH="/home/player1/miniconda/bin:$PATH"  # commented out by conda initialize
+# export PATH="/Users/budchris/miniconda/bin:$PATH"  # commented out by conda initialize

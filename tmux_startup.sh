@@ -22,7 +22,7 @@ create_window() {
 
 # Create Yo session with 3 windows
 create_session "Yo" "Player1" "cd ~/dotfiles"
-create_window "Yo" "Player2" "cd ~/Nextcloud/obsidian/player2; nvim"
+create_window "Yo" "Player2" "cd ~/Nextcloud/obsidian/player2; nvim todo.md"
 create_window "Yo" "Work" "cd ~/Projects/sn"
 
 # Select the Player2 window
