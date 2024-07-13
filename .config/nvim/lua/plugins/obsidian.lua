@@ -18,14 +18,6 @@ return {
 				name = "Player2",
 				path = "~/Nextcloud/obsidian/player2",
 			},
-			{
-				name = "Vault",
-				path = "~/Nextcloud/obsidian/vault",
-			},
-			{
-				name = "Notion",
-				path = "~/Nextcloud/obsidian/notion",
-			},
 		},
 
 		templates = {
@@ -46,7 +38,7 @@ return {
 		end,
 
 		-- Either 'wiki' or 'markdown'.
-		preferred_link_style = "markdown",
+		preferred_link_style = "wiki",
 
 		-- Optional, boolean or a function that takes a filename and returns a boolean.
 		-- `true` indicates that you don't want obsidian.nvim to manage frontmatter.
