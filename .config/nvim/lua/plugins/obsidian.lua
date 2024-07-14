@@ -133,13 +133,18 @@ return {
 
 			title = title:gsub("[^%w%s-]", ""):gsub("%s+", "-"):lower()
 			local new_filename = formatted_date .. "-" .. title .. ".md"
-			local filepath = vim.fn.expand("%:p:h") .. "/" .. new_filename
+			local new_filepath = vim.fn.expand("%:p:h") .. "/" .. new_filename
 			local current_filepath = vim.fn.expand("%:p")
 
-			vim.cmd("write " .. filepath)
+			-- Write the current buffer to the new file
+			vim.cmd("write! " .. new_filepath)
 
-			-- Remove the original file after writing the new one
-			os.remove(current_filepath)
+			-- Delete the original file
+			vim.fn.delete(current_filepath)
+
+			-- Reload the buffer with the new file
+			vim.api.nvim_buf_set_name(bufnr, new_filepath)
+			vim.cmd("edit!")
 
 			print("File saved and renamed to: " .. new_filename)
 		end
