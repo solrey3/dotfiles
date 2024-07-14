@@ -105,11 +105,13 @@ return {
 			local bufnr = vim.api.nvim_get_current_buf()
 			local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 			local title
+			local note_date
 
 			for _, line in ipairs(lines) do
 				if line:match("^title:%s") then
 					title = line:gsub("^title:%s*", "")
-					break
+				elseif line:match("^note:%s") then
+					note_date = line:gsub("^note:%s*", "")
 				end
 			end
 
@@ -118,11 +120,27 @@ return {
 				return
 			end
 
+			if not note_date then
+				print("No note property found in the markdown file.")
+				return
+			end
+
+			-- Extract and format the note date (YYYYMMDD)
+			local year = note_date:sub(1, 4)
+			local month = note_date:sub(5, 6)
+			local day = note_date:sub(7, 8)
+			local formatted_date = string.format("%s-%s-%s", year, month, day)
+
 			title = title:gsub("[^%w%s-]", ""):gsub("%s+", "-"):lower()
-			local date = os.date("%Y-%m-%d")
-			local new_filename = date .. "-" .. title .. ".md"
+			local new_filename = formatted_date .. "-" .. title .. ".md"
 			local filepath = vim.fn.expand("%:p:h") .. "/" .. new_filename
+			local current_filepath = vim.fn.expand("%:p")
+
 			vim.cmd("write " .. filepath)
+
+			-- Remove the original file after writing the new one
+			os.remove(current_filepath)
+
 			print("File saved and renamed to: " .. new_filename)
 		end
 

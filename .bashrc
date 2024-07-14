@@ -10,7 +10,7 @@ if [ -f '/Users/budchris/google-cloud-sdk/completion.bash.inc' ]; then . '/Users
 alias hist="history 1"
 alias vi="nvim"
 alias vim="nvim"
-alias p2="cd ~/Nextcloud/obsidian/player2; nvim"
+alias p2="cd ~/Nextcloud/obsidian/player2; nvim todo.md"
 
 # Completion for terraform
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
