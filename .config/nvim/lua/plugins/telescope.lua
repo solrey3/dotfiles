@@ -66,6 +66,12 @@ return {
 				-- },
 			},
 			-- pickers = {}
+			pickers = {
+				find_files = {
+					hidden = true, -- Include hidden files
+				},
+				-- other pickers configuration
+			},
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
