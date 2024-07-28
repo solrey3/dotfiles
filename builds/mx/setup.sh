@@ -12,7 +12,7 @@ sudo apt install proton-vpn-gnome-desktop
 
 # Install essential packages
 # Install unzip and fontconfig for JetBrains Mono Nerd Font
-sudo apt install -y curl git wget build-essential software-properties-common stow rsync unzip fontconfig ripgrep
+sudo apt install -y curl git wget build-essential software-properties-common stow rsync unzip fontconfig ripgrep gh alacritty tmux
 
 # Check if Docker is installed, if not install Docker and Docker Compose
 if ! command -v docker &>/dev/null; then
@@ -49,34 +49,21 @@ if ! command -v nvim &>/dev/null; then
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
   sudo rm -rf /opt/nvim
   sudo tar -C /opt -xzf nvim-linux64.tar.gz   
-  mv nvim-linux64 /usr/local/neovim
-  ln -s /usr/local/neovim/bin/nvim /usr/local/bin/nvim
   rm -f nvim-linux64.tar.gz
 
   # Backup existing Neovim configuration
-  mv /home/player1/.config/nvim{,.bak}
-  mv /home/player1/.local/share/nvim{,.bak}
-  mv /home/player1/.local/state/nvim{,.bak}
-  mv /home/player1/.cache/nvim{,.bak}
+  #mv /home/player1/.config/nvim{,.bak}
+  #mv /home/player1/.local/share/nvim{,.bak}
+  #mv /home/player1/.local/state/nvim{,.bak}
+  #mv /home/player1/.cache/nvim{,.bak}
 
   # Clone LazyVim starter configuration
-  git clone https://github.com/LazyVim/starter /home/player1/.config/nvim
-  rm -rf /home/player1/.config/nvim/.git
+  #git clone https://github.com/LazyVim/starter /home/player1/.config/nvim
+  #rm -rf /home/player1/.config/nvim/.git
 
   update_neovim_plugins
 else
   echo "Neovim is already installed."
-fi
-
-# Check and install GitHub CLI if not installed
-if ! command -v gh &>/dev/null; then
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-  chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-  sudo apt update
-  sudo apt install gh
-else
-  echo "GitHub CLI is already installed."
 fi
 
 # Clean up
