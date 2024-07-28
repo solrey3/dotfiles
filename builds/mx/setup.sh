@@ -1,8 +1,10 @@
 #!/bin/bash
 
 ## Step 1: Run `sudo apt update && sudo apt upgrade -y` manually
-
+#
 ## Step 2: Install NVIDIA drivers if necessary
+#
+## Step 3: The Script
 
 ## Upgrade/Upgrade
 sudo apt update && sudo apt upgrade -y
@@ -12,11 +14,24 @@ wget https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-st
 sudo dpkg -i ./protonvpn-stable-release_1.0.3-3_all.deb && sudo apt update
 sudo apt install proton-vpn-gnome-desktop
 
-# Install essential packages
-# Install unzip and fontconfig for JetBrains Mono Nerd Font
-sudo apt install -y curl git wget build-essential software-properties-common stow rsync unzip fontconfig ripgrep gh alacritty tmux
+## Install essential packages
+### Install unzip and fontconfig for JetBrains Mono Nerd Font
+sudo apt install -y \
+  alacritty \
+  build-essential \
+  curl \
+  fontconfig \
+  git \
+  gh \
+  ripgrep \
+  rsync \
+  software-properties-common \
+  stow \
+  tmux \
+  unzip \
+  wget
 
-# Check if Docker is installed, if not install Docker and Docker Compose
+## Check if Docker is installed, if not install Docker and Docker Compose
 if ! command -v docker &>/dev/null; then
   curl -fsSL https://get.docker.com -o get-docker.sh
   sudo sh get-docker.sh
@@ -46,18 +61,6 @@ if ! command -v nvim &>/dev/null; then
   sudo rm -rf /opt/nvim
   sudo tar -C /opt -xzf nvim-linux64.tar.gz
   rm -f nvim-linux64.tar.gz
-
-  # Backup existing Neovim configuration
-  #mv /home/player1/.config/nvim{,.bak}
-  #mv /home/player1/.local/share/nvim{,.bak}
-  #mv /home/player1/.local/state/nvim{,.bak}
-  #mv /home/player1/.cache/nvim{,.bak}
-
-  # Clone LazyVim starter configuration
-  #git clone https://github.com/LazyVim/starter /home/player1/.config/nvim
-  #rm -rf /home/player1/.config/nvim/.git
-
-  #update_neovim_plugins
 else
   echo "Neovim is already installed."
 fi
