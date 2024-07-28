@@ -45,9 +45,12 @@ fi
 shopt -s histappend
 export HISTCONTROL=ignoredups:erasedups # no duplicate entries
 
-# Use up/down arrow keys to search history
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
+# Check for an interactive session
+if [[ $- == *i* ]]; then
+  # Use up/down arrow keys to search history
+  bind '"\e[A": history-search-backward'
+  bind '"\e[B": history-search-forward'
+fi
 
 # Completion for terraform
 complete -o nospace -C /opt/homebrew/bin/terraform terraform

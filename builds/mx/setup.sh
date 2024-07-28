@@ -77,10 +77,13 @@ DOTFILES_DIR="/home/player1/dotfiles"
 backup_existing_files() {
   local target_dir="$1"
   local stow_dir="$2"
-  for file in $(stow -n -d "$stow_dir" -t "$target_dir" -v | awk '{print $2}'); do
-    if [ -e "$target_dir/$file" ] && [ ! -L "$target_dir/$file" ]; then
-      echo "Backing up $target_dir/$file to $target_dir/${file}.bak"
-      mv "$target_dir/$file" "$target_dir/${file}.bak"
+  # List all files that stow would manage
+  stow -n -d "$stow_dir" -t "$target_dir" -v | while read -r action file; do
+    target_file="$target_dir/$file"
+    # Check if target is a regular file
+    if [ -f "$target_file" ] && [ ! -L "$target_file" ]; then
+      echo "Backing up $target_file to ${target_file}.bak"
+      mv "$target_file" "${target_file}.bak"
     fi
   done
 }
@@ -94,8 +97,14 @@ fi
 ### Backup existing files before creating symlinks with stow
 backup_existing_files "/home/player1" "$DOTFILES_DIR"
 
+if [ -f ~/.bashrc ]; then
+  mv ~/.bashrc ~/.bashrc.bak
+fi
+
 ### Use stow to create symlinks for all configurations
 stow -d "$DOTFILES_DIR" -t "/home/player1" .
+
+source ~/.bashrc
 
 ### Function to update Neovim plugins using LazyVim
 update_neovim_plugins() {
@@ -147,6 +156,7 @@ sudo npm install --global yarn
 
 ### Typescript Tools
 ##### cdktf, cdk8s
+yarn global add ink@^3.0.0 react@^17.0.2
 yarn global add cdk8s-cli cdktf-cli
 ##### playwright
 yarn add -D playwright
@@ -173,7 +183,7 @@ conda_env_exists() {
 if conda_env_exists $ENV_NAME; then
   echo "Conda environment '$ENV_NAME' already exists."
 else
-  echo "Creating conda env '$ENV_NAME' in Python 3.0."
+  echo "Creating conda env '$ENV_NAME' in Python 3.9."
   conda create -n $ENV_NAME python=3.9 -y
   conda activate $ENV_NAME
   conda install -n $ENV_NAME jupyter pandas matplotlib sqlalchemy sqlite psycopg2 pymongo beuatifulsoup4 lxml selenium splinter flask flask-pymongo -y
