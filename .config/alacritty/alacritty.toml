@@ -21,5 +21,5 @@ TERM = "xterm-256color"
 # Window settings
 [window]
 padding = { x = 24, y = 24 }
-decorations = "transparent"  # Transparent borders
+decorations = "Full"  # Transparent borders
 opacity = 0.8  # Set the window opacity to 80%

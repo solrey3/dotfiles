@@ -5,15 +5,31 @@ alias hist="history 1"
 alias vi="nvim"
 alias vim="nvim"
 alias p2="cd ~/Nextcloud/obsidian/player2; nvim todo.md"
+alias dtf="cd ~/dotfiles; nvim"
+# some more ls aliases
+alias ll='ls -lh'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
 
 # Set the terminal to handle backspace correctly
 stty erase '^?'
 
 # Add $HOME/bin to PATH
 export PATH="$HOME/bin:$PATH"
+# Homebrew
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
+# Anaconda3
 export PATH="$HOME/anaconda3/bin:$PATH"
+# NeoVim
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # Enable bash completion if available
@@ -126,20 +142,6 @@ if [ -x /usr/bin/dircolors ]; then
   #alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -lh'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
-
 # Default parameter to send to the "less" command
 # -R: show ANSI colors correctly; -i: case insensitive search
 LESS="-R -i"
@@ -163,5 +165,6 @@ xterm* | rxvt*)
 *) ;;
 esac
 
-export PATH="/home/player1/miniconda/bin:$PATH"
+export PATH="~/miniconda/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH=~/miniconda3/bin:$PATH
