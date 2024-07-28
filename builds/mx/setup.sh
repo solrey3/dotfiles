@@ -1,9 +1,11 @@
 #!/bin/bash
 
+## Step 1: Run `sudo apt update && sudo apt upgrade -y` manually
+
+## Step 2: Install NVIDIA drivers if necessary
+
 ## Upgrade/Upgrade
 sudo apt update && sudo apt upgrade -y
-
-## Setup NVIDIA drivers
 
 ## Install Proton VPN
 wget https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3-3_all.deb
@@ -38,17 +40,11 @@ else
   echo "JetBrains Mono Nerd Font is already installed."
 fi
 
-# Function to update Neovim plugins using LazyVim
-update_neovim_plugins() {
-  echo "Installing Neovim plugins..."
-  nvim --headless -c 'lua require("lazy").sync()' +qa
-}
-
 # Check if Neovim is installed, if not install Neovim, backup config, and clone LazyVim
 if ! command -v nvim &>/dev/null; then
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
   sudo rm -rf /opt/nvim
-  sudo tar -C /opt -xzf nvim-linux64.tar.gz   
+  sudo tar -C /opt -xzf nvim-linux64.tar.gz
   rm -f nvim-linux64.tar.gz
 
   # Backup existing Neovim configuration
@@ -61,7 +57,7 @@ if ! command -v nvim &>/dev/null; then
   #git clone https://github.com/LazyVim/starter /home/player1/.config/nvim
   #rm -rf /home/player1/.config/nvim/.git
 
-  update_neovim_plugins
+  #update_neovim_plugins
 else
   echo "Neovim is already installed."
 fi
@@ -88,7 +84,6 @@ backup_existing_files() {
 if [ ! -d "$DOTFILES_DIR" ]; then
   echo "dotfiles directory does not exist, cloning..."
   git clone https://github.com/solrey3/dotfiles "$DOTFILES_DIR"
-  chown -R player1:player1 "$DOTFILES_DIR"
 fi
 
 # Backup existing files before creating symlinks with stow
@@ -96,6 +91,12 @@ backup_existing_files "/home/player1" "$DOTFILES_DIR"
 
 # Use stow to create symlinks for all configurations
 stow -d "$DOTFILES_DIR" -t "/home/player1" .
+
+# Function to update Neovim plugins using LazyVim
+update_neovim_plugins() {
+  echo "Installing Neovim plugins..."
+  nvim --headless -c 'lua require("lazy").sync()' +qa
+}
 
 # Update Neovim plugins using LazyVim if Neovim was installed
 if command -v nvim &>/dev/null; then
