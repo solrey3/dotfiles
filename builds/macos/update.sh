@@ -20,24 +20,6 @@ check_brew_install() {
   fi
 }
 
-# Function to install Docker and Docker Compose
-install_docker() {
-  if ! command -v docker &>/dev/null; then
-    echo "Docker could not be found, installing..."
-    brew install --cask docker
-    echo "Please start Docker from the Applications folder and allow it to complete installation."
-  else
-    echo "Docker is already installed."
-  fi
-
-  if ! command -v docker-compose &>/dev/null; then
-    echo "Docker Compose could not be found, installing..."
-    brew install docker-compose
-  else
-    echo "Docker Compose is already installed."
-  fi
-}
-
 # Check for Homebrew and install if not found
 if ! command -v brew &>/dev/null; then
   echo "Homebrew could not be found, installing..."
@@ -63,9 +45,22 @@ check_and_install alacritty
 check_brew_install ripgrep
 check_brew_install neovim
 check_brew_install bitwarden-cli
-
-# Install Docker and Docker Compose
-install_docker
+check_brew_install kubectl
+check_brew_install terraform
+check_brew_install node
+check_brew_install yarn
+check_brew_install cdk8s
+check_brew_install cdktf
+check_brew_install playwright
+check_brew_install miniconda
+check_brew_install gcloud
+check_brew_install azure-cli
+check_brew_install awscli
+check_brew_install doctl
+check_brew_install 1password-cli
+check_brew_install nextcloud
+check_brew_install obsidian
+check_brew_install brave-browser
 
 # Define dotfiles directory
 DOTFILES_DIR="$HOME/dotfiles"
@@ -74,6 +69,17 @@ DOTFILES_DIR="$HOME/dotfiles"
 if [ ! -d "$DOTFILES_DIR" ]; then
   echo "Cloning dotfiles repository..."
   git clone https://github.com/solrey3/dotfiles "$DOTFILES_DIR"
+fi
+
+# Tap the fonts cask and install the font
+echo "Installing JetBrains Mono Nerd Font..."
+brew tap homebrew/cask-fonts
+brew install --cask font-jetbrains-mono-nerd-font
+# Confirm installation
+if brew list --cask | grep -q "font-jetbrains-mono-nerd-font"; then
+  echo "JetBrains Mono Nerd Font successfully installed."
+else
+  echo "Failed to install JetBrains Mono Nerd Font."
 fi
 
 # Update starship
@@ -86,5 +92,26 @@ stow -d "$DOTFILES_DIR" -t "$HOME" .
 # Install Neovim plugins using LazyVim
 echo "Installing Neovim plugins..."
 nvim --headless -c 'lua require("lazy").sync()' +qa
+
+# Function to install Docker and Docker Compose
+install_docker() {
+  # Install docker
+  if ! command -v docker &>/dev/null; then
+    echo "Docker could not be found, installing..."
+    brew install --cask docker
+    echo "Please start Docker from the Applications folder and allow it to complete installation."
+  else
+    echo "Docker is already installed."
+  fi
+  # Install docker-compose
+  if ! command -v docker-compose &>/dev/null; then
+    echo "Docker Compose could not be found, installing..."
+    brew install docker-compose
+  else
+    echo "Docker Compose is already installed."
+  fi
+}
+# Install Docker and Docker Compose
+install_docker
 
 echo "Update complete."
