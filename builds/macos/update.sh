@@ -53,7 +53,6 @@ check_brew_install cdk8s
 check_brew_install cdktf
 # check_brew_install playwright
 check_brew_install miniconda
-# check_brew_install gcloud
 check_brew_install azure-cli
 check_brew_install awscli
 check_brew_install doctl
@@ -113,5 +112,30 @@ install_docker() {
 }
 # Install Docker and Docker Compose
 install_docker
+
+# Function to install Google Cloud CLI
+install_gcloud() {
+  echo "Installing Google Cloud CLI..."
+  # Download the installation script
+  curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-442.0.0-darwin-arm.tar.gz
+  # Extract the archive
+  tar -xzf google-cloud-cli-442.0.0-darwin-arm.tar.gz
+  # Install the CLI
+  ./google-cloud-sdk/install.sh
+
+  # Initialize the gcloud environment
+  ./google-cloud-sdk/bin/gcloud init
+
+  # Clean up
+  rm google-cloud-cli-442.0.0-darwin-arm.tar.gz
+  echo "Google Cloud CLI installed successfully."
+}
+# Check if gcloud is installed
+if ! command -v gcloud &>/dev/null; then
+  echo "gcloud could not be found"
+  install_gcloud
+else
+  echo "gcloud is already installed"
+fi
 
 echo "Update complete."
