@@ -11,9 +11,14 @@ cd
 sudo apt update && sudo apt upgrade -y
 
 ## Install Proton VPN
-wget https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3-3_all.deb
-sudo dpkg -i ./protonvpn-stable-release_1.0.3-3_all.deb && sudo apt update
-sudo apt install proton-vpn-gnome-desktop -y
+if sudo dpkg -s proton-vpn-gnome-desktop; then
+  echo "VPN already set."
+else
+  wget https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3-3_all.deb
+  sudo dpkg -i ./protonvpn-stable-release_1.0.3-3_all.deb && sudo apt update
+  sudo apt install proton-vpn-gnome-desktop -y
+  rm protonvpn-stable-release_1.0.3-3_all.deb
+fi
 
 ## Install essential packages
 ### Install unzip and fontconfig for JetBrains Mono Nerd Font
@@ -153,6 +158,7 @@ fi
 
 ### yarn
 sudo npm install --global yarn
+echo "Cat got its yarn."
 
 ### Typescript Tools
 ##### cdktf, cdk8s
@@ -208,7 +214,7 @@ fi
 if ! command -v az &>/dev/null; then
   curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 else
-  echo "Azure is already installed."
+  echo "Azure is all about it."
 fi
 
 ### aws
@@ -257,6 +263,8 @@ fi
 
 ## Clean up
 rm -f get-docker.sh JetBrainsMono.zip nvim-linux64.tar.gz protonvpn-stable-release_1.0.3-3_all.deb
+sudo apt autoremove -y
+sudo apt clean
 
 ## ALL DONE!!!
 echo "Setup and update complete."
