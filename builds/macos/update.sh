@@ -51,9 +51,9 @@ check_brew_install node
 check_brew_install yarn
 check_brew_install cdk8s
 check_brew_install cdktf
-check_brew_install playwright
+# check_brew_install playwright
 check_brew_install miniconda
-check_brew_install gcloud
+# check_brew_install gcloud
 check_brew_install azure-cli
 check_brew_install awscli
 check_brew_install doctl
