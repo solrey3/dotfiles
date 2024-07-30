@@ -34,6 +34,8 @@ sudo apt install -y \
   gnupg \
   nodejs \
   npm \
+  remmina \
+  remmina-plugin-rdp \
   ripgrep \
   rsync \
   software-properties-common \
@@ -248,9 +250,6 @@ else
   echo "1Password CLI is already installed."
 fi
 
-### Nextcloud
-### Obsidian
-
 ### Brave Browser
 if brave-browser --version; then
   echo "Yo, you already Brave."
@@ -260,6 +259,17 @@ else
   sudo apt update
   sudo apt install -y brave-browser
 fi
+
+#### Chrome extensions for Brave
+##### DuckDuckGo Essentials
+##### Privacy Badger
+##### Bitwarden
+##### Vimium
+##### Clear Cache
+##### JSON Formatter
+
+### Nextcloud
+### Obsidian
 
 ## Clean up
 rm -f get-docker.sh JetBrainsMono.zip nvim-linux64.tar.gz protonvpn-stable-release_1.0.3-3_all.deb
