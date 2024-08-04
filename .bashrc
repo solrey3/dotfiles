@@ -171,3 +171,9 @@ esac
 export PATH="~/miniconda/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH=~/miniconda3/bin:$PATH
+
+export NIX_PATH="darwin=$HOME/.nix-defexpr/channels/darwin:nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs"
+export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
+export NIXPKGS_SYSTEM=aarch64-darwin
+export NIXPKGS_ALLOW_BROKEN=1
+export NIXPKGS_ALLOW_UNFREE=1
