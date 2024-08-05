@@ -13,6 +13,7 @@ fi
 
 # Use stow to link dotfiles
 cd "$DOTFILES_DIR"
-stow -d "$DOTFILES_DIR" -t "$HOME" .
+# stow -d "$DOTFILES_DIR" -t "$HOME" .
+stow -d "$DOTFILES_DIR" -t "$HOME" --ignore='^(LICENSE|README\.md|\.git|builds)$' --no-folding .
 
 echo "Dotfiles setup complete!"

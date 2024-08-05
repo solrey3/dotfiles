@@ -10,6 +10,7 @@ alias dtf="cd ~/dotfiles; nvim"
 alias ll='ls -lh'
 alias la='ls -A'
 alias l='ls -CF'
+alias nano="nvim"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -156,10 +157,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
   . /etc/bash_completion
 fi
 
-# Add sbin directories to PATH.  This is useful on systems that have sudo
-echo $PATH | grep -Eq "(^|:)/sbin(:|)" || PATH=$PATH:/sbin
-echo $PATH | grep -Eq "(^|:)/usr/sbin(:|)" || PATH=$PATH:/usr/sbin
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm* | rxvt*)
@@ -172,8 +169,12 @@ export PATH="~/miniconda/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH=~/miniconda3/bin:$PATH
 
-export NIX_PATH="darwin=$HOME/.nix-defexpr/channels/darwin:nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs"
-export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
-export NIXPKGS_SYSTEM=aarch64-darwin
-export NIXPKGS_ALLOW_BROKEN=1
-export NIXPKGS_ALLOW_UNFREE=1
+# export NIX_PATH="darwin=$HOME/.nix-defexpr/channels/darwin:nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs"
+# export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
+# export NIXPKGS_SYSTEM=aarch64-darwin
+# export NIXPKGS_ALLOW_BROKEN=1
+# export NIXPKGS_ALLOW_UNFREE=1
+#
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
