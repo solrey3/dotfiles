@@ -174,7 +174,8 @@ export PATH=~/miniconda3/bin:$PATH
 # export NIXPKGS_SYSTEM=aarch64-darwin
 # export NIXPKGS_ALLOW_BROKEN=1
 # export NIXPKGS_ALLOW_UNFREE=1
-#
+
+# Nix
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
