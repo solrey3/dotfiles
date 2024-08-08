@@ -13,7 +13,25 @@
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
-        [ pkgs.vim
+        [ 
+          pkgs.alacritty
+          pkgs.curl
+          pkgs.git
+          pkgs.gh
+          pkgs.kubectl
+          pkgs.lazygit
+          pkgs.neovim
+          pkgs.nodejs
+          pkgs.ripgrep
+          pkgs.starship
+          pkgs.stow
+          pkgs.tmux
+          pkgs.tokei
+          pkgs.tree
+          pkgs.unzip
+          pkgs.vim
+          pkgs.wget
+          pkgs.yarn
         ];
 
       # Auto upgrade nix package and the daemon service.
@@ -24,7 +42,8 @@
       nix.settings.experimental-features = "nix-command flakes";
 
       # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.bash.enable = true;  # default shell on catalina
+      programs.bash.enable = true; # bash everything 
+      # programs.zsh.enable = true;  # default shell on catalina
       # programs.fish.enable = true;
 
       # Set Git commit hash for darwin-version.
@@ -36,6 +55,9 @@
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
+
+      # enable TouchID for sudo!!!
+      security.pam.enableSudoTouchIdAuth = true;
     };
   in
   {
