@@ -1,73 +1,88 @@
 {
-  description = "Example Darwin system flake";
+  description = "Nix for macOS configuration";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+  ##################################################################################################################
+  #
+  # Want to know Nix in details? Looking for a beginner-friendly tutorial?
+  # Check out https://github.com/ryan4yin/nixos-and-flakes-book !
+  #
+  ##################################################################################################################
+
+  # the nixConfig here only affects the flake itself, not the system configuration!
+  nixConfig = {
+    substituters = [
+      # Query the mirror of USTC first, and then the official cache.
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://cache.nixos.org"
+    ];
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
-  let
-    configuration = { pkgs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ 
-          pkgs.alacritty
-          pkgs.curl
-          pkgs.git
-          pkgs.gh
-          pkgs.kubectl
-          pkgs.lazygit
-          pkgs.neovim
-          pkgs.nodejs
-          pkgs.ripgrep
-          pkgs.starship
-          pkgs.stow
-          pkgs.tmux
-          pkgs.tokei
-          pkgs.tree
-          pkgs.unzip
-          pkgs.vim
-          pkgs.wget
-          pkgs.yarn
-        ];
+  # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
+  # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
+  inputs = {
+    # nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
 
-      # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.bash.enable = true; # bash everything 
-      # programs.zsh.enable = true;  # default shell on catalina
-      # programs.fish.enable = true;
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 4;
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
-
-      # enable TouchID for sudo!!!
-      security.pam.enableSudoTouchIdAuth = true;
-    };
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#solr-mba-m2-2022
-    darwinConfigurations."solr-mba-m2-2022" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+    # home-manager, used for managing user configuration
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      # The `follows` keyword in inputs is used for inheritance.
+      # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
+      # to avoid problems caused by different versions of nixpkgs dependencies.
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."solr-mba-m2-2022".pkgs;
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+  };
+
+  # The `outputs` function will return all the build results of the flake.
+  # A flake can have many use cases and different types of outputs,
+  # parameters in `outputs` are defined in `inputs` and can be referenced by their names.
+  # However, `self` is an exception, this special parameter points to the `outputs` itself (self-reference)
+  # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    darwin,
+    home-manager,
+    ...
+  }: let
+    # TODO replace with your own username, email, system, and hostname
+    username = "budchris";
+    useremail = "budchris@solrey3.com";
+    system = "x86_64-darwin"; # aarch64-darwin or x86_64-darwin
+    hostname = "solr-mbp13-2017";
+
+    specialArgs =
+      inputs
+      // {
+        inherit username useremail hostname;
+      };
+  in {
+    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+      inherit system specialArgs;
+      modules = [
+        ./modules/nix-core.nix
+        ./modules/system.nix
+        ./modules/apps.nix
+        ./modules/homebrew-mirror.nix # comment this line if you don't need a homebrew mirror
+        ./modules/host-users.nix
+
+        # home manager
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.users.${username} = import ./home;
+        }
+      ];
+    };
+
+    # nix code formatter
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }
