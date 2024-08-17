@@ -8,4 +8,5 @@ return {
 	},
 	{ "junegunn/fzf.vim" },
 	{ "hashivim/vim-terraform" },
+	{ "github/copilot.vim" },
 }
