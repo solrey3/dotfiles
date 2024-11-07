@@ -7,7 +7,7 @@ stow -t ~/.config/alacritty alacritty
 stow -t ~ bash
 
 # Stow nix configuration
-stow -t /etc/nix nix
+stow -t ~/.config/nix nix
 
 # Stow nvim configuration
 stow -t ~/.config/nvim nvim
