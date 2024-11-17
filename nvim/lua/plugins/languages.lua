@@ -23,7 +23,7 @@ return {
 	{ "nvim-treesitter/playground" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{ "b0o/schemastore.nvim" },
-	{ "jose-elias-alvarez/null-ls.nvim" },
+	-- { "nvimtools/none-ls.nvim" },
 	{ "mfussenegger/nvim-lint" },
 	{ "mfussenegger/nvim-dap" },
 
@@ -70,10 +70,13 @@ return {
 				"lua",
 				"vim",
 				"markdown",
+				"markdown_inline",
 				"javascript",
+				"nix",
 			},
 			highlight = {
 				enable = true,
+				additional_vim_regex_highlighting = { "markdown" },
 			},
 			indent = {
 				enable = true,
@@ -94,6 +97,7 @@ return {
 			"marksman",
 			"eslint",
 			"sumneko_lua",
+			"rnix",
 		}
 
 		require("mason").setup()
@@ -150,6 +154,7 @@ return {
 			sql = { "sqlint" },
 			markdown = { "markdownlint" },
 			lua = { "luacheck" },
+			nix = { "nix-linter" },
 		}
 		vim.g.ale_fixers = {
 			python = { "black", "isort" },
@@ -162,6 +167,7 @@ return {
 			sql = { "sqlformat" },
 			markdown = { "prettier" },
 			lua = { "stylua" },
+			nix = { "nixpkgs-fmt" },
 		}
 		vim.g.ale_fix_on_save = 1
 	end,

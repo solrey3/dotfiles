@@ -5,7 +5,7 @@ return {
 	ft = "markdown",
 	-- Load the plugin only if the directory exists
 	cond = function()
-		return vim.fn.isdirectory(vim.fn.expand("~/Nextcloud/obsidian/player2")) == 1
+		return vim.fn.isdirectory(vim.fn.expand("~/Nextcloud/obsidian")) == 1
 	end,
 	dependencies = {
 		-- Required.
@@ -77,7 +77,7 @@ return {
 			vim.ui.select(choices, { prompt = "Choose a template:" }, function(choice)
 				if choice then
 					local datetime = os.date("%Y%m%d%H%M%S")
-					local filename = vim.fn.expand("~/Nextcloud/obsidian/player2/") .. datetime .. ".md"
+					local filename = vim.fn.expand("~/Nextcloud/obsidian/player2/inbox/") .. datetime .. ".md"
 					vim.cmd("e " .. filename)
 
 					-- Read template content and replace variables
