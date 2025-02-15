@@ -7,7 +7,7 @@ return {
 	{ "williamboman/mason-lspconfig.nvim" },
 
 	-- Treesitter
-	{ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
 	-- Autocompletion
 	{ "hrsh7th/nvim-cmp" },
