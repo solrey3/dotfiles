@@ -58,6 +58,7 @@ return {
 	config = function()
 		-- Ensure Treesitter parsers are installed
 		require("nvim-treesitter.configs").setup({
+			auto_install = false,
 			ensure_installed = {
 				"bash",
 				"python",
