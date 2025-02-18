@@ -1,4 +1,7 @@
 -- lua/plugins/languages.lua
+if true then
+	return {}
+end
 
 return {
 	-- LSP Config

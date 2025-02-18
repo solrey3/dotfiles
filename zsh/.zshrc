@@ -62,3 +62,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # Set STARSHIP_CONFIG environment variable
 export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init zsh)"
+export PATH="/usr/local/nvim/bin:$PATH"
+
+export TERM=xterm-256color

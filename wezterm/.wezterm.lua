@@ -18,6 +18,7 @@ return {
 
 	-- Color scheme
 	color_scheme = "Catppuccin Mocha", -- Or choose another theme that you like
+	term = "xterm-256color",
 
 	-- Background opacity
 	window_background_opacity = 0.95,
