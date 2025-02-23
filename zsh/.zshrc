@@ -12,11 +12,11 @@ stty erase '^?'
 alias hist="history 1"
 alias vi="nvim"
 alias vim="nvim"
-alias p2="cd ~/Repos/github.com/solrey3/notes/ && nvim todo.md"
-alias dtf="cd ~/dotfiles && nvim"
 alias ll='ls -lh'
 alias la='ls -A'
 alias l='ls -CF'
+alias p2="cd ~/Repos/github.com/solrey3/notes/ && nvim todo.md"
+alias dtf="cd ~/Repos/github.com/solrey3/dotfiles/ && nvim todo.md"
 
 #############################################
 # Installation Instructions (if applicable)
@@ -24,6 +24,14 @@ alias l='ls -CF'
 # Nix:      nix-env -iA nixpkgs.neovim google-cloud-sdk terraform starship
 # apt:      sudo apt-get install neovim google-cloud-sdk terraform starship
 # Homebrew: brew install neovim google-cloud-sdk terraform starship
+
+#############################################
+# Oh-My-Zsh Configuration
+#############################################
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"    # Change this theme if you prefer another one
+plugins=(git)               # Add more plugins as needed
+source "$ZSH/oh-my-zsh.sh"
 
 #############################################
 # Shell History Configuration (after oh-my-zsh)
