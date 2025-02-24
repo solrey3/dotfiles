@@ -3,10 +3,6 @@ return {
 	version = "*", -- recommended, use latest release instead of latest commit
 	lazy = true,
 	ft = "markdown",
-	-- Load the plugin only if the directory exists
-	cond = function()
-		return vim.fn.isdirectory(vim.fn.expand("~/Nextcloud/obsidian")) == 1
-	end,
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
@@ -16,12 +12,12 @@ return {
 		workspaces = {
 			{
 				name = "Player2",
-				path = "~/Nextcloud/obsidian/player2",
+				path = "~/Repos/github.com/solrey3/notes/",
 			},
 		},
 
 		templates = {
-			folder = "~/Nextcloud/obsidian/player2/templates",
+			folder = "~/Repos/github.com/solrey3/notes/templates",
 			date_format = "%Y-%m-%d",
 			time_format = "%Y%m%d%H%M%S",
 		},
@@ -62,7 +58,7 @@ return {
 
 		-- Function to create a new note and apply a template
 		_G.CreateObsidianNoteWithTemplate = function()
-			local template_dir = vim.fn.expand("~/Nextcloud/obsidian/player2/templates/")
+			local template_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/templates/")
 			local templates = vim.fn.globpath(template_dir, "*.md", false, true)
 			if #templates == 0 then
 				print("No templates found in " .. template_dir)
@@ -77,7 +73,7 @@ return {
 			vim.ui.select(choices, { prompt = "Choose a template:" }, function(choice)
 				if choice then
 					local datetime = os.date("%Y%m%d%H%M%S")
-					local filename = vim.fn.expand("~/Nextcloud/obsidian/player2/inbox/") .. datetime .. ".md"
+					local filename = vim.fn.expand("~/Repos/github.com/solrey3/notes/inbox/") .. datetime .. ".md"
 					vim.cmd("e " .. filename)
 
 					-- Read template content and replace variables
