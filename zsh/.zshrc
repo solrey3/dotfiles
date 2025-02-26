@@ -9,14 +9,16 @@ stty erase '^?'
 #############################################
 # Aliases
 #############################################
+alias dtf="cd ~/Repos/github.com/solrey3/dotfiles/ && nvim"
 alias hist="history 1"
+alias k=kubectl
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -lh'
+alias nixc="cd ~/Repos/github.com/solrey3/nix-config/ && nvim"
+alias p2="cd ~/Repos/github.com/solrey3/notes/ && nvim todo.md"
 alias vi="nvim"
 alias vim="nvim"
-alias ll='ls -lh'
-alias la='ls -A'
-alias l='ls -CF'
-alias p2="cd ~/Repos/github.com/solrey3/notes/ && nvim todo.md"
-alias dtf="cd ~/Repos/github.com/solrey3/dotfiles/ && nvim todo.md"
 
 #############################################
 # Installation Instructions (if applicable)
