@@ -30,7 +30,7 @@ alias dtf="cd ~/Repos/github.com/solrey3/dotfiles/ && nvim todo.md"
 #############################################
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"    # Change this theme if you prefer another one
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax highlighting zsh-autocomplete z sudo kubectl)
+plugins=(git zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete z sudo kubectl)
 source "$ZSH/oh-my-zsh.sh"
 
 #############################################
