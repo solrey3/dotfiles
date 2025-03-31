@@ -1,46 +1,85 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+local function render_template(content, vars)
+  vars = vim.tbl_extend("force", {
+    date = os.date("%Y-%m-%d"),
+    time = os.date("%H:%M:%S"),
+    datetime = os.date("%Y-%m-%d %H:%M:%S"),
+    uuid = vim.fn.systemlist("uuidgen")[1],
+  }, vars or {})
 
--- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
--- Set highlight on search, but clear on pressing <Esc> in normal mode
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess wit:hout a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
----- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
--- Define a global function to insert the timestamp
-function _G.insert_timestamp()
-	local ts = os.date("%Y%m%d%H%M%S")
-	-- Use vim.api.nvim_put to insert the timestamp text
-	vim.api.nvim_put({ ts }, "c", true, true)
+  return (content:gsub("{{(.-)}}", function(key)
+    return vars[key] or "{{" .. key .. "}}"
+  end))
 end
--- Set up the keymap for insert mode to trigger the function
-vim.api.nvim_set_keymap("i", "<C-t>", "<Esc>:lua insert_timestamp()<CR>a", { noremap = true, silent = true })
 
--- Mapping <leader>d to open the dashboard
-vim.api.nvim_set_keymap("n", "<leader>d", "<cmd>Dashboard<CR>", { noremap = true, silent = true })
+local function create_note_with_template()
+  local template_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/templates/")
+  local inbox_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/inbox/")
+  local templates = vim.fn.globpath(template_dir, "*.md", false, true)
+
+  if #templates == 0 then
+    print("No templates found in " .. template_dir)
+    return
+  end
+
+  local choices = {}
+  for _, template in ipairs(templates) do
+    table.insert(choices, vim.fn.fnamemodify(template, ":t:r"))
+  end
+
+  vim.ui.select(choices, { prompt = "Choose a template:" }, function(choice)
+    if choice then
+      local datetime = os.date("%Y%m%d%H%M%S")
+      local filename = inbox_dir .. datetime .. ".md"
+      vim.cmd("e " .. filename)
+
+      local template_content = table.concat(vim.fn.readfile(template_dir .. choice .. ".md"), "\n")
+      local rendered_content = render_template(template_content, { title = datetime })
+      vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(rendered_content, "\n"))
+
+      print("Created note: " .. filename .. " with template: " .. choice)
+    else
+      print("Template selection cancelled")
+    end
+  end)
+end
+
+local function save_and_rename_file()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local title, note_date
+
+  for _, line in ipairs(lines) do
+    if line:match("^title:%s") then
+      title = line:gsub("^title:%s*", "")
+    elseif line:match("^note:%s") then
+      note_date = line:gsub("^note:%s*", "")
+    end
+  end
+
+  if not title or not note_date then
+    print("Missing title or note date.")
+    return
+  end
+
+  local year, month, day = note_date:sub(1, 4), note_date:sub(5, 6), note_date:sub(7, 8)
+  local formatted_date = string.format("%s-%s-%s", year, month, day)
+
+  title = title:gsub("[^%w%s-]", ""):gsub("%s+", "-"):lower()
+  local new_filename = formatted_date .. "-" .. title .. ".md"
+  local new_filepath = vim.fn.expand("%:p:h") .. "/" .. new_filename
+  local current_filepath = vim.fn.expand("%:p")
+
+  vim.cmd("write! " .. new_filepath)
+  vim.fn.delete(current_filepath)
+  vim.api.nvim_buf_set_name(bufnr, new_filepath)
+  vim.cmd("edit!")
+
+  print("File saved and renamed to: " .. new_filename)
+end
+
+-- Keymaps
+vim.keymap.set("n", "<leader>on", create_note_with_template, { desc = "New Note from Template" })
+vim.keymap.set("n", "<leader>ob", save_and_rename_file, { desc = "Save and Rename Note" })
