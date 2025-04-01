@@ -6,7 +6,7 @@ return {
 	font_size = 12.0,
 
 	-- Disable the tab bar
-	enable_tab_bar = false,
+	-- enable_tab_bar = false,
 
 	-- Window padding
 	window_padding = {
@@ -21,7 +21,7 @@ return {
 	term = "xterm-256color",
 
 	-- Background opacity
-	window_background_opacity = 0.95,
+	window_background_opacity = 0.8,
 
 	-- Scrollback
 	scrollback_lines = 3500,

@@ -12,8 +12,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function(args)
     local filepath = vim.api.nvim_buf_get_name(args.buf)
     if filepath:match("/templates/") then
-      -- Disable formatting just for this save
-      vim.b.disable_autoformat = true
+      -- Disable formatting for markdown files in the templates directory
+      vim.b[args.buf].disable_autoformat = true
+    else
+      -- Ensure it's not disabled for other markdown files
+      vim.b[args.buf].disable_autoformat = false
     end
   end,
 })

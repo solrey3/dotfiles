@@ -83,3 +83,7 @@ end
 -- Keymaps
 vim.keymap.set("n", "<leader>on", create_note_with_template, { desc = "New Note from Template" })
 vim.keymap.set("n", "<leader>ob", save_and_rename_file, { desc = "Save and Rename Note" })
+vim.keymap.set("i", "<C-t>", function()
+  local timestamp = os.date("%Y%m%d%H%M%S")
+  vim.api.nvim_put({ timestamp }, "c", true, true)
+end, { desc = "Insert Timestamp" })
