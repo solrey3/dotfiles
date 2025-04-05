@@ -2,25 +2,23 @@ return {
   "nvim-lualine/lualine.nvim",
   optional = true,
   opts = function(_, opts)
-    local Util = require("lazyvim.util")
-    -- Safely attempt to require copilot status
     local function copilot_status()
       local ok, copilot = pcall(require, "copilot")
       if not ok or not copilot.status or not copilot.status.data then
         return ""
       end
-      return copilot.status.data.status or ""
+      return " " .. (copilot.status.data.status or "")
     end
 
-    -- Insert into the right section (customize as needed)
-    table.insert(opts.sections.lualine_x, {
-      function()
-        return " " .. copilot_status()
-      end,
-      cond = function()
-        local ok, copilot = pcall(require, "copilot")
-        return ok and copilot.status and copilot.status.data and copilot.status.data.status ~= nil
-      end,
-    })
+    -- Replace the existing Copilot indicator (if any)
+    for i, section in ipairs(opts.sections.lualine_x) do
+      if type(section) == "table" and section[1] and section[1]:find("copilot") then
+        opts.sections.lualine_x[i] = copilot_status
+        return
+      end
+    end
+
+    -- Otherwise, just insert it safely
+    table.insert(opts.sections.lualine_x, copilot_status)
   end,
 }
