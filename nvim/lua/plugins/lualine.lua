@@ -10,15 +10,18 @@ return {
       return " " .. (copilot.status.data.status or "")
     end
 
-    -- Replace the existing Copilot indicator (if any)
-    for i, section in ipairs(opts.sections.lualine_x) do
-      if type(section) == "table" and section[1] and section[1]:find("copilot") then
+    -- Replace existing Copilot indicator (safely)
+    local replaced = false
+    for i, section in ipairs(opts.sections.lualine_x or {}) do
+      if type(section) == "table" and type(section[1]) == "string" and section[1]:find("copilot") then
         opts.sections.lualine_x[i] = copilot_status
-        return
+        replaced = true
+        break
       end
     end
 
-    -- Otherwise, just insert it safely
-    table.insert(opts.sections.lualine_x, copilot_status)
+    if not replaced then
+      table.insert(opts.sections.lualine_x, copilot_status)
+    end
   end,
 }
