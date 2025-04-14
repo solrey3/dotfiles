@@ -31,7 +31,7 @@ alias vim="nvim"
 #############################################
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"    # Change this theme if you prefer another one
-plugins=(git z sudo kubectl)
+plugins=(git z sudo kubectl zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
 #############################################
