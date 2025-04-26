@@ -15,8 +15,8 @@ local function render_template(content, vars)
 end
 
 local function create_note_with_template()
-  local template_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/templates/")
-  local inbox_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/inbox/")
+  local template_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/05-templates/")
+  local inbox_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/00-inbox/")
   local templates = vim.fn.globpath(template_dir, "*.md", false, true)
 
   if #templates == 0 then
