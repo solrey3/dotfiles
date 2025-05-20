@@ -31,8 +31,9 @@ alias vim="nvim"
 #############################################
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"    # Change this theme if you prefer another one
-plugins=(git z sudo kubectl)
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
+source "$ZSH/custom/plugins/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+plugins=(git z sudo kubectl zsh-syntax-highlighting zsh-fast-syntax-highlighting zsh-autocomplete)
 
 #############################################
 # Shell History Configuration (after oh-my-zsh)
