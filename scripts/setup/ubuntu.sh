@@ -30,10 +30,10 @@ SCRIPTS=(
   "$ROOT_DIR/setup/linux/bitwarden-cli.sh"
 
   # ---------- Services ----------
-  "$ROOT_DIR/setup/ubuntu-lts/avahi.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/docker.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/jellyfin.sh"
-  "$ROOT_DIR/setup/linux/ollama.sh"
+  # "$ROOT_DIR/setup/ubuntu-lts/avahi.sh"
+  # "$ROOT_DIR/setup/ubuntu-lts/docker.sh"
+  # "$ROOT_DIR/setup/ubuntu-lts/jellyfin.sh"
+  # "$ROOT_DIR/setup/linux/ollama.sh"
 
   # ---------- Language / Env / Editor ----------
   "$ROOT_DIR/setup/ubuntu-lts/typescript.sh"
@@ -64,4 +64,3 @@ echo "🔧 Applying dotfiles with stow…"
 bash "$ROOT_DIR/stow/dotfiles.sh"
 
 echo "✅ All setup steps complete!"
-
