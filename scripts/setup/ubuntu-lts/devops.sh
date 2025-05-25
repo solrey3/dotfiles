@@ -17,29 +17,7 @@ else
   echo "✅ kubectl installed (version ${K8S_VER})."
 fi
 
-# 2. k9s
-if command -v k9s &>/dev/null; then
-  echo "✅ k9s is already installed."
-else
-  echo "🔄 Installing k9s…"
-  K9S_TGZ="k9s_Linux_amd64.tar.gz"
-  curl -sL -o "$K9S_TGZ" https://github.com/derailed/k9s/releases/latest/download/$K9S_TGZ
-  tar -xzf "$K9S_TGZ"
-  sudo mv k9s /usr/local/bin/
-  rm -f "$K9S_TGZ"
-  echo "✅ k9s installed."
-fi
-
-# 3. Helm
-if command -v helm &>/dev/null; then
-  echo "✅ Helm is already installed."
-else
-  echo "🔄 Installing Helm…"
-  curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-  echo "✅ Helm installed (version $(helm version --short))."
-fi
-
-# 4. Terraform
+# 2. Terraform
 if command -v terraform &>/dev/null; then
   echo "✅ Terraform is already installed."
 else
@@ -57,7 +35,7 @@ https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
   echo "✅ Terraform installed (version $(terraform version | head -n1))."
 fi
 
-# 5. Additional apt-installable DevOps clients
+# 3. Additional apt-installable DevOps clients
 echo "🔄 Installing additional CLI tools via apt: postgresql-client, redis-tools, nmap…"
 sudo apt update
 sudo apt install -y postgresql-client redis-tools nginx nmap

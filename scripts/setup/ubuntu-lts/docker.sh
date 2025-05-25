@@ -1,41 +1,54 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Script: setup-docker-repo-and-engine.sh
+# Idempotently configures Docker’s apt repository and installs Docker Engine & CLI.
+
 # Check if Docker is already installed
 if command -v docker &>/dev/null; then
-  echo "✅ Docker is already installed."
+  echo "✅ Docker is already installed: $(docker --version)"
 else
-  echo "🔄 Installing Docker…"
+  echo "🔄 Setting up Docker repository & installing Docker…"
 
-  # 1. Set up Docker’s GPG keyring directory
-  sudo mkdir -p /etc/apt/keyrings
+  # Ensure apt prerequisites are present
+  echo "→ Installing prerequisites: ca-certificates, curl…"
+  sudo apt-get update
+  sudo apt-get install -y ca-certificates curl
 
-  # 2. Download & dearmor the official GPG key
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-    | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  # Create keyrings dir if needed
+  echo "→ Creating /etc/apt/keyrings…"
+  sudo install -m 0755 -d /etc/apt/keyrings
 
-  # 3. Add the Docker apt repository
-  arch=$(dpkg --print-architecture)
-  distro=$(lsb_release -cs)
+  # Download & install Docker’s official GPG key
+  echo "→ Downloading Docker GPG key…"
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add Docker apt repository
+  echo "→ Adding Docker apt repository…"
+  distro_codename=$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
   echo \
-    "deb [arch=${arch} signed-by=/etc/apt/keyrings/docker.gpg] \
-    https://download.docker.com/linux/ubuntu ${distro} stable" \
-    | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/ubuntu ${distro_codename} stable" \
+    | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
-  # 4. Install Docker Engine and related packages
-  sudo apt update
-  sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  # Update & install Docker packages
+  echo "→ Updating apt and installing Docker packages…"
+  sudo apt-get update
+  sudo apt-get install -y \
+    docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-  echo "✅ Docker Engine & CLI installed."
+  echo "✅ Docker Engine & CLI installation complete."
 fi
 
-# Optional: add current user to 'docker' group if not already in it
+# Optional: add current user to 'docker' group if desired
 if groups "$USER" | grep -qw docker; then
   echo "ℹ️  User '$USER' is already in the 'docker' group."
 else
-  echo "➕ Adding user '$USER' to 'docker' group…"
+  echo "→ Adding user '$USER' to 'docker' group…"
   sudo usermod -aG docker "$USER"
-  echo "✅ Added! You'll need to log out and back in (or run 'newgrp docker') for this to take effect."
+  echo "✅ Added! Please log out and back in (or run 'newgrp docker') for it to take effect."
 fi
 
-echo "🎉 Done."
+echo "🎉 Docker setup complete!"
