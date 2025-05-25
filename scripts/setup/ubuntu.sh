@@ -26,6 +26,7 @@ SCRIPTS=(
   # ---------- Language / Env / Editor ----------
   "$ROOT_DIR/setup/linux/cargo.sh"
   "$ROOT_DIR/setup/linux/alacritty.sh"
+  "$ROOT_DIR/setup/linux/wezterm.sh"
   "$ROOT_DIR/setup/linux/miniconda.sh"
   "$ROOT_DIR/setup/linux/neovim.sh"
   "$ROOT_DIR/setup/linux/starship.sh"

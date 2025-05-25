@@ -1,30 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Stow zsh configuration
+# Directory where dotfiles repo should live
+dotfiles_dir="$HOME/.dotfiles"
+
+# 1. Clone dotfiles repo if it doesn't exist
+if [ ! -d "$dotfiles_dir" ]; then
+  echo "→ Cloning dotfiles into $dotfiles_dir..."
+  git clone https://github.com/solrey3/dotfiles.git "$dotfiles_dir"
+fi
+
+# 2. Enter the dotfiles directory
+echo "→ Entering $dotfiles_dir"
+cd "$dotfiles_dir"
+
+# 3. Stow configurations
+echo "→ Stowing configurations..."
+
+# Zsh
 stow -t ~ zsh
 
-# Stow bash configuration
+# Bash
 stow -t ~ bash
 
-# Stow nix configuration
+# Nix
 stow -t ~/.config/nix nix
 
-# Stow starship configuration
+# Starship
 stow -t ~/.config starship
 
-# Stow tmux configuration
+# Tmux
 stow -t ~ tmux
 
-# Stow vim configuration
+# Vim
 stow -t ~ vim
 
-# Stow nvim configuration
+# Neovim
 stow -t ~/.config/nvim nvim
 
-# Stow wezterm configuration
+# WezTerm
 stow -t ~ wezterm
 
-# Stow alacritty configuration
+# Alacritty
 stow -t ~/.config/alacritty alacritty
 
-echo "All files have been stowed to their expected locations."
+echo "✅ All files have been stowed to their expected locations."
