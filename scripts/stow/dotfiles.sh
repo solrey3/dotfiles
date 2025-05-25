@@ -23,9 +23,6 @@ stow -t ~ zsh
 # Bash
 stow -t ~ bash
 
-# Nix
-stow -t ~/.config/nix nix
-
 # Starship
 stow -t ~/.config starship
 
@@ -44,4 +41,8 @@ stow -t ~ wezterm
 # Alacritty
 stow -t ~/.config/alacritty alacritty
 
+# i3
+stow ~/.config/i3 i3
+
 echo "✅ All files have been stowed to their expected locations."
+
