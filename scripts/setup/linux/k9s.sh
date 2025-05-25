@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Script: k9s.sh
-# Installs k9s if not already present.
-
 # k9s
 if command -v k9s &>/dev/null; then
   echo "✅ k9s is already installed."

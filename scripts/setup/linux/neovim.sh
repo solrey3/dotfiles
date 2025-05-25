@@ -1,36 +1,45 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-NEOVIM_VERSION="v0.10.4"
+# 0. Discover latest Neovim release tag (e.g. "v0.10.5")
+echo "→ Fetching latest Neovim version…"
+NEOVIM_VERSION=$(curl -fsSL https://api.github.com/repos/neovim/neovim/releases/latest \
+  | grep -Po '"tag_name": *"\K(.*)(?=")')
+if [ -z "$NEOVIM_VERSION" ]; then
+  echo "❌ Failed to determine latest Neovim version."
+  exit 1
+fi
+echo "→ Latest version is $NEOVIM_VERSION"
+
 ARCHIVE="nvim-linux-x86_64.tar.gz"
 DIR="nvim-linux-x86_64"
 INSTALL_PATH="/usr/local/$DIR"
 SYMLINK="/usr/local/bin/nvim"
 
-# Check if nvim is already installed at the correct version
+# 1. Check existing installation
 if command -v nvim &>/dev/null; then
   INSTALLED_VERSION=$(nvim --version | head -n1 | awk '{print $2}')
-  if [ "$INSTALLED_VERSION" = "$NEOVIM_VERSION" ]; then
-    echo "✅ Neovim $NEOVIM_VERSION is already installed."
+  if [ "$INSTALLED_VERSION" = "${NEOVIM_VERSION#v}" ]; then
+    echo "✅ Neovim $INSTALLED_VERSION is already the latest."
     exit 0
   else
-    echo "⚠️  Neovim is installed (version $INSTALLED_VERSION), but not $NEOVIM_VERSION. Upgrading…"
+    echo "⚠️  Neovim is installed (version $INSTALLED_VERSION), upgrading to $NEOVIM_VERSION…"
   fi
 else
   echo "🔄 Installing Neovim $NEOVIM_VERSION…"
 fi
 
-# 1. Download the release archive
-wget -q "https://github.com/neovim/neovim/releases/download/$NEOVIM_VERSION/$ARCHIVE"
+# 2. Download the release archive
+URL="https://github.com/neovim/neovim/releases/download/${NEOVIM_VERSION}/${ARCHIVE}"
+echo "→ Downloading from $URL"
+wget -q "$URL" -O "$ARCHIVE"
 
-# 2. Extract it
+# 3. Extract and move into place
 tar -xzf "$ARCHIVE"
-
-# 3. Move into place (overwrite if needed)
 sudo rm -rf "$INSTALL_PATH"
 sudo mv "$DIR" "$INSTALL_PATH"
 
-# 4. (Re)create symlink
+# 4. Symlink the binary
 if [ -L "$SYMLINK" ] || [ -e "$SYMLINK" ]; then
   sudo rm -f "$SYMLINK"
 fi

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Script: setup-lazygit.sh
+# Script: lazygit.sh
 # Installs lazygit if not already present.
 
 # 1. Check if lazygit is already installed

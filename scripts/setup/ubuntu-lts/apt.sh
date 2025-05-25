@@ -39,9 +39,4 @@ echo "→ Installing media utilities…"
 sudo apt install -y \
   ffmpeg
 
-# Database clients
-echo "→ Installing database tools…"
-sudo apt install -y \
-  postgresql
-
 echo "✅ All packages installed!"

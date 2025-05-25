@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Script: helm.sh
-# Installs Helm if not already present.
-
 # Helm
 if command -v helm &>/dev/null; then
   echo "✅ Helm is already installed."

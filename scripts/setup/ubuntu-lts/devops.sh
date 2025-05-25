@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Script: setup-devops-tools.sh
-# Installs kubectl, k9s, Helm, and Terraform if they’re not already present.
+# Installs kubectl, Terraform, and apt-available DevOps tools if they’re not already present.
 
 # 1. kubectl
 if command -v kubectl &>/dev/null; then
