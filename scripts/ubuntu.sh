@@ -42,8 +42,9 @@ SCRIPTS=(
 
   # ---------- User & Productivity CLI’s ----------
   "$ROOT_DIR/setup/ubuntu-lts/xfce-i3.sh"
+  "$ROOT_DIR/setup/ubuntu-lts/ghostty.sh"
   "$ROOT_DIR/setup/linux/alacritty.sh"
-  "$ROOT_DIR/setup/linux/wezterm.sh"
+  "$ROOT_DIR/setup/ubuntu-lts/wezterm.sh"
   "$ROOT_DIR/setup/linux/brave.sh"
 
 )
