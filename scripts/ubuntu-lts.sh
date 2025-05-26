@@ -10,42 +10,42 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS=(
   # ---------- Ubuntu‐LTS Core & CLI tools ----------
   "$ROOT_DIR/setup/ubuntu-lts/apt.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/jetbrainsmono-nerd-font.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/zsh.sh"
+  "$ROOT_DIR/setup/debian/jetbrainsmono-nerd-font.sh"
+  "$ROOT_DIR/setup/debian/zsh.sh"
   "$ROOT_DIR/setup/linux/starship.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/fastfetch.sh"
+  "$ROOT_DIR/setup/debian/fastfetch.sh"
+  "$ROOT_DIR/setup/linux/cargo.sh"
   "$ROOT_DIR/setup/linux/neovim.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/yt-dlp.sh"
   "$ROOT_DIR/setup/linux/x86_64/fabric-ai.sh"
+  "$ROOT_DIR/setup/linux/yt-dlp.sh"
 
   # ---------- DevOps Helpers ----------
-  "$ROOT_DIR/setup/ubuntu-lts/devops.sh"
+  "$ROOT_DIR/setup/debian/devops.sh"
   "$ROOT_DIR/setup/linux/helm.sh"
   "$ROOT_DIR/setup/linux/k9s.sh"
   "$ROOT_DIR/setup/linux/lazygit.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/gcloud.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/azure.sh"
+  "$ROOT_DIR/setup/debian/gcloud.sh"
+  "$ROOT_DIR/setup/debian/azure.sh"
   "$ROOT_DIR/setup/linux/x86_64/aws.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/1password-cli.sh"
+  "$ROOT_DIR/setup/debian/1password-cli.sh"
   "$ROOT_DIR/setup/linux/bitwarden-cli.sh"
 
+  # ---------- Language / Env / Editor ----------
+  "$ROOT_DIR/setup/debian/typescript.sh"
+  "$ROOT_DIR/setup/linux/miniconda.sh"
+
   # ---------- Services ----------
-  # "$ROOT_DIR/setup/ubuntu-lts/avahi.sh"
+  # "$ROOT_DIR/setup/debian/avahi.sh"
   # "$ROOT_DIR/setup/ubuntu-lts/docker.sh"
-  # "$ROOT_DIR/setup/ubuntu-lts/jellyfin.sh"
+  # "$ROOT_DIR/setup/debian/jellyfin.sh"
   # "$ROOT_DIR/setup/linux/ollama.sh"
 
-  # ---------- Language / Env / Editor ----------
-  "$ROOT_DIR/setup/ubuntu-lts/typescript.sh"
-  "$ROOT_DIR/setup/linux/miniconda.sh"
-  "$ROOT_DIR/setup/linux/cargo.sh"
-
-  # ---------- User & Productivity CLI’s ----------
-  "$ROOT_DIR/setup/ubuntu-lts/xfce-i3.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/ghostty.sh"
-  "$ROOT_DIR/setup/linux/alacritty.sh"
-  "$ROOT_DIR/setup/ubuntu-lts/wezterm.sh"
-  "$ROOT_DIR/setup/linux/brave.sh"
+  # ---------- Desktop Environment ----------
+  # "$ROOT_DIR/setup/debian/xfce-i3.sh"
+  # "$ROOT_DIR/setup/ubuntu-lts/ghostty.sh"
+  # "$ROOT_DIR/setup/linux/alacritty.sh"
+  # "$ROOT_DIR/setup/debian/wezterm.sh"
+  # "$ROOT_DIR/setup/linux/brave.sh"
 
 )
 
