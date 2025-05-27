@@ -22,16 +22,25 @@ if command -v terraform &>/dev/null; then
   echo "✅ Terraform is already installed."
 else
   echo "🔄 Installing Terraform…"
+
+  # Detect the proper Ubuntu codename (for Mint)
+  UBUNTU_CODENAME=$(grep UBUNTU_CODENAME /etc/os-release | cut -d= -f2)
+  if [ -z "$UBUNTU_CODENAME" ]; then
+    UBUNTU_CODENAME=$(lsb_release -cs)
+  fi
+
   # Add HashiCorp GPG key and repo
   sudo mkdir -p /usr/share/keyrings
-  curl -fsSL https://apt.releases.hashicorp.com/gpg \
-    | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  curl -fsSL https://apt.releases.hashicorp.com/gpg |
+    sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
   echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
-    | sudo tee /etc/apt/sources.list.d/hashicorp.list >/dev/null
+https://apt.releases.hashicorp.com $UBUNTU_CODENAME main" |
+    sudo tee /etc/apt/sources.list.d/hashicorp.list >/dev/null
 
   sudo apt update
   sudo apt install -y terraform
+
   echo "✅ Terraform installed (version $(terraform version | head -n1))."
 fi
 
@@ -42,3 +51,4 @@ sudo apt install -y postgresql-client redis-tools nginx nmap
 echo "✅ postgresql-client, redis-tools, and nmap installed."
 
 echo "🎉 All DevOps tools are set up!"
+
