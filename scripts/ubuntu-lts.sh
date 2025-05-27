@@ -9,7 +9,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ————————————————————————————————
 SCRIPTS=(
   # ---------- Ubuntu‐LTS Core & CLI tools ----------
-  "$ROOT_DIR/setup/ubuntu-lts/apt.sh"
+  "$ROOT_DIR/setup/debian/apt.sh"
   "$ROOT_DIR/setup/debian/jetbrainsmono-nerd-font.sh"
   "$ROOT_DIR/setup/debian/zsh.sh"
   "$ROOT_DIR/setup/linux/starship.sh"
