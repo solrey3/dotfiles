@@ -31,7 +31,8 @@ SCRIPTS=(
   "$ROOT_DIR/setup/linux/bitwarden-cli.sh"
 
   # ---------- Language / Env / Editor ----------
-  "$ROOT_DIR/setup/debian/typescript.sh"
+  "$ROOT_DIR/setup/linux/typescript.sh"
+  "$ROOT_DIR/setup/linux/yarn.sh"
   "$ROOT_DIR/setup/linux/miniconda.sh"
 
   # ---------- Services ----------
