@@ -8,7 +8,7 @@ A cross-platform, modular setup to manage system and dev environment configs usi
 .
 ├── .gitignore               → Global Git ignore rules
 ├── README.md                → This file
-├── LICENSE                  → MIT License
+├── LICENSE                  → GNU GPLv3
 ├── flake.nix                → Nix flake entrypoint
 │
 ├── alacritty/               → Alacritty terminal configs (.toml and .yml)
@@ -87,4 +87,4 @@ nix build .#nixosConfigurations.myhostname.config.system.build.toplevel
 
 ## 📄 License
 
-MIT — See [`LICENSE`](./LICENSE)
+GNU GPLv3 — See [`LICENSE`](./LICENSE)
