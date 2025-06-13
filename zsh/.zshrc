@@ -18,6 +18,8 @@ alias nixc="cd ~/Repos/github.com/solrey3/nix-config/ && nvim"
 alias p2="cd ~/Repos/github.com/solrey3/notes/ && nvim todo.md"
 alias vi="nvim"
 alias vim="nvim"
+alias gcm="git commit -m"
+alias gco="git checkout"
 
 #############################################
 # Installation Instructions (if applicable)

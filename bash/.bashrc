@@ -6,6 +6,8 @@ alias vi="nvim"
 alias vim="nvim"
 alias p2="cd ~/Nextcloud/obsidian/player2; nvim todo.md"
 alias dtf="cd ~/dotfiles; nvim"
+alias gcm="git commit -m"
+alias gco="git checkout"
 # some more ls aliases
 alias ll='ls -lh'
 alias la='ls -A'
