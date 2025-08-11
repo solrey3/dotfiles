@@ -11,9 +11,9 @@ else
   echo "🔄 Setting up Docker repository & installing Docker…"
 
   # Ensure apt prerequisites are present
-  echo "→ Installing prerequisites: ca-certificates, curl…"
+  echo "→ Installing prerequisites: ca-certificates, curl, gnupg…"
   sudo apt-get update
-  sudo apt-get install -y ca-certificates curl
+  sudo apt-get install -y ca-certificates curl gnupg
 
   # Create keyrings dir if needed
   echo "→ Creating /etc/apt/keyrings…"
@@ -21,17 +21,17 @@ else
 
   # Download & install Docker’s official GPG key
   echo "→ Downloading Docker GPG key…"
-  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-    -o /etc/apt/keyrings/docker.asc
-  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg |
+    sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
   # Add Docker apt repository
   echo "→ Adding Docker apt repository…"
   distro_codename=$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
   echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-https://download.docker.com/linux/ubuntu ${distro_codename} stable" \
-    | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu ${distro_codename} stable" |
+    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
   # Update & install Docker packages
   echo "→ Updating apt and installing Docker packages…"
