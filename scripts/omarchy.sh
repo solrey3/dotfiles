@@ -9,10 +9,10 @@ sudo pacman -Syu \
   gcc git gawk jq just openssl tokei lazygit \
   unzip zip p7zip \
   rsync tree stow nnn mc \
-  curl nmap speedtest-cli \
+  curl wget nmap speedtest-cli \
   ffmpeg yt-dlp \
   figlet fortune-mod cowsay cmatrix \
-  proton-vpn-gtk-app
+  networkmanager network-manager-applet proton-vpn-gtk-app
 
 # 2. Install yay AUR helper if missing
 if ! command -v yay &>/dev/null; then
@@ -29,7 +29,7 @@ fi
 yay -S \
   wezterm ghostty \
   librewolf-bin google-chrome \
-  fabric-ai
+  fabric-ai opencode-bin
 
 # 6. Install Brave Browser
 curl -fsS https://dl.brave.com/install.sh | sh
