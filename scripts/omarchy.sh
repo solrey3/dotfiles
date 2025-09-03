@@ -12,7 +12,7 @@ sudo pacman -Syu \
   curl wget nmap speedtest-cli \
   ffmpeg yt-dlp \
   figlet fortune-mod cowsay cmatrix \
-  networkmanager network-manager-applet proton-vpn-gtk-app
+  networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client
 
 # 2. Install yay AUR helper if missing
 if ! command -v yay &>/dev/null; then
@@ -29,7 +29,7 @@ fi
 yay -S \
   wezterm ghostty \
   librewolf-bin google-chrome \
-  fabric-ai opencode-bin
+  fabric-ai
 
 # 6. Install Brave Browser
 curl -fsS https://dl.brave.com/install.sh | sh
