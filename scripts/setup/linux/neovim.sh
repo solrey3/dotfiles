@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "🔄 Ensuring Neovim is up to date"
+
 # 0. Discover latest Neovim release tag (e.g. "v0.10.5")
 echo "→ Fetching latest Neovim version…"
-NEOVIM_VERSION=$(curl -fsSL https://api.github.com/repos/neovim/neovim/releases/latest \
-  | grep -Po '"tag_name": *"\K(.*)(?=")')
+NEOVIM_VERSION=$(curl -fsSL https://api.github.com/repos/neovim/neovim/releases/latest | grep -Po '"tag_name": *"\K(.*)(?=")')
 if [ -z "$NEOVIM_VERSION" ]; then
   echo "❌ Failed to determine latest Neovim version."
   exit 1
@@ -52,4 +53,4 @@ rm -f "$ARCHIVE"
 echo "✅ Neovim installed. Version:"
 nvim --version | head -n1
 
-echo "🎉 Done."
+echo "🎉 Neovim setup complete"
