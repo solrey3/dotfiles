@@ -32,7 +32,7 @@ sudo pacman -Syu --noconfirm \
   figlet fortune-mod cowsay cmatrix \
   networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client \
   python nodejs npm \
-  alacritty github-cli ripgrep fzf zoxide eza fd
+  alacritty github-cli ripgrep fzf zoxide eza fd dysk
 echo "✅ Core packages installed"
 
 required_nvim="0.11.4"
@@ -72,8 +72,7 @@ yay -S --noconfirm \
   wezterm ghostty \
   librewolf-bin google-chrome brave-bin \
   fabric-ai \
-  ttf-jetbrains-mono-nerd \
-  dysk
+  ttf-jetbrains-mono-nerd
 echo "✅ AUR packages installed"
 
 echo "🔄 Generating SSH key"
