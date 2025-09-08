@@ -1,43 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Fresh Post-Omarchy desktop setup
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# 1. Update system and install core packages
-sudo pacman -Syu \
-  base-devel zsh bash tmux starship \
-  gcc git gawk jq just openssl tokei lazygit \
-  fzf ripgrep \
-  unzip zip p7zip \
-  rsync tree stow nnn mc zoxide eza fd dysk \
-  curl wget nmap speedtest-cli \
-  ffmpeg yt-dlp \
-  figlet fortune-mod cowsay cmatrix \
-  python nodejs npm yarn \
-  networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client \
-  alacritty github-cli 
+SCRIPTS=(
+  "$ROOT_DIR/setup/arch/pacman-core.sh"
+  "$ROOT_DIR/setup/arch/yay.sh"
+  "$ROOT_DIR/setup/arch/aur-packages.sh"
+  "$ROOT_DIR/setup/linux/ssh-key.sh"
+  "$ROOT_DIR/setup/linux/git.sh"
+  "$ROOT_DIR/setup/linux/neovim.sh"
+  "$ROOT_DIR/setup/linux/lazyvim.sh"
+  "$ROOT_DIR/setup/linux/opencode-ai.sh"
+)
 
-# 2. Install yay AUR helper if missing
-if ! command -v yay &>/dev/null; then
-  sudo pacman -S --needed base-devel git
-  tempdir=$(mktemp -d)
-  git clone https://aur.archlinux.org/yay.git "$tempdir/yay"
-  (cd "$tempdir/yay" && makepkg -si --noconfirm)
-  rm -rf "$tempdir"
-else
-  echo "✅ yay already installed"
-fi
+echo "🔧 Running setup scripts in specified order…"
+for script in "${SCRIPTS[@]}"; do
+  if [ ! -f "$script" ]; then
+    echo "⚠️  SKIPPING missing script: $script"
+    continue
+  fi
+  echo "→ $script"
+  chmod +x "$script"
+  bash "$script"
+done
 
-# 3. Install additional packages via yay
-yay -S \
-  wezterm ghostty \
-  librewolf-bin google-chrome \
-  fabric-ai
-
-# 6. Install Brave Browser
-curl -fsS https://dl.brave.com/install.sh | sh
-
-# 7. Install opencode.ai
-curl -fsSL https://opencode.ai/install | bash
-
-echo "🎉 Post-Omarchy setup complete!"
+echo "✅ All setup steps complete!"
