@@ -23,16 +23,18 @@ echo "✅ Arch keyring reset"
 
 echo "🔄 Updating system and installing core packages"
 sudo pacman -Syu --noconfirm \
-  base-devel tmux starship \
+  base-devel zsh bash tmux starship \
   gcc git gawk jq just openssl tokei lazygit \
+  fzf ripgrep \
   unzip zip p7zip \
-  rsync tree stow nnn mc \
+  rsync tree stow nnn mc zoxide eza fd dysk \
   curl wget nmap speedtest-cli \
   ffmpeg yt-dlp \
   figlet fortune-mod cowsay cmatrix \
+  python nodejs npm yarn \
   networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client \
-  python nodejs npm \
-  alacritty github-cli ripgrep fzf zoxide eza fd dysk
+  alacritty github-cli 
+
 echo "✅ Core packages installed"
 
 required_nvim="0.11.4"
