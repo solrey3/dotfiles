@@ -8,9 +8,6 @@ SCRIPTS=(
   "$ROOT_DIR/setup/arch/yay.sh"
   "$ROOT_DIR/setup/arch/aur-packages.sh"
   "$ROOT_DIR/setup/linux/ssh-key.sh"
-  "$ROOT_DIR/setup/linux/git.sh"
-  "$ROOT_DIR/setup/linux/neovim.sh"
-  "$ROOT_DIR/setup/linux/lazyvim.sh"
   "$ROOT_DIR/setup/linux/opencode-ai.sh"
 )
 
