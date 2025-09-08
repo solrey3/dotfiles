@@ -5,14 +5,17 @@ set -euo pipefail
 
 # 1. Update system and install core packages
 sudo pacman -Syu \
-  tmux \
+  base-devel zsh bash tmux starship \
   gcc git gawk jq just openssl tokei lazygit \
+  fzf ripgrep \
   unzip zip p7zip \
-  rsync tree stow nnn mc \
+  rsync tree stow nnn mc zoxide eza fd dysk \
   curl wget nmap speedtest-cli \
   ffmpeg yt-dlp \
   figlet fortune-mod cowsay cmatrix \
-  networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client
+  python nodejs npm yarn \
+  networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client \
+  alacritty github-cli 
 
 # 2. Install yay AUR helper if missing
 if ! command -v yay &>/dev/null; then
