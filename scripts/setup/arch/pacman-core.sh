@@ -14,8 +14,6 @@ sudo pacman -Syu --noconfirm \
   python nodejs npm yarn \
   networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client \
   alacritty github-cli \
-  btop htop fastfetch lsof file \
-  kubectl k9s helm terraform \
-  neovim
+  btop htop fastfetch lsof
 
 echo "✅ Core packages installed"
