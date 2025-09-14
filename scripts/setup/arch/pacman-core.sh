@@ -13,7 +13,8 @@ sudo pacman -Syu --noconfirm \
   figlet fortune-mod cowsay cmatrix \
   python nodejs npm yarn \
   networkmanager network-manager-applet proton-vpn-gtk-app nextcloud-client \
-  alacritty remmina freerdp \
+  alacritty xclip xsel \
+  remmina freerdp \
   github-cli \
   btop htop fastfetch lsof
 
