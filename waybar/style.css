@@ -114,8 +114,17 @@ tooltip label{
 	color: @content_main;
 }
 
-#cpu, #disk, #memory {
+#cpu, #disk, #memory, #custom-weather {
 	padding:3px;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#custom-weather:hover {
+	background: @bg_hover;
+}
+
+#custom-weather.weather-error {
+	color: @warning_color;
 }
 
 #temperature {

@@ -18,6 +18,7 @@
         "temperature",
         "memory",
         "disk",
+        "custom/weather",
         "tray",
         "pulseaudio",
         "network",
@@ -137,6 +138,14 @@
             "󰂂",
             "󰁹"
         ]
+    },
+    "custom/weather": {
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "return-type": "json",
+        "interval": 1800,
+        "tooltip": true,
+        "format": "{}",
+        "on-click": "xdg-open https://wttr.in"
     },
     "pulseaudio": {
         "max-volume": 150,
