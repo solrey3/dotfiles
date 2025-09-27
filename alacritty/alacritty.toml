@@ -1,25 +1,59 @@
-# Font settings
-[font]
-normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
-size = 12.0
+# Modern Alacritty configuration matching system setup
+# Uses Omarchy theme management for consistent theming
 
-# Colors
-[colors]
-[colors.primary]
-background = "#282c34"
-foreground = "#ffffff"
-
-# Shell configuration
-[shell]
-program = "/usr/bin/zsh"
-args = ["-l"]            # Changed "-1" to "-l" for login shell
+# Import theme from Omarchy (fallback to built-in if not available)
+general.import = [ "~/.config/omarchy/current/theme/alacritty.toml" ]
 
 # Environment variables
 [env]
 TERM = "xterm-256color"
 
-# Window settings
+# Font configuration
+[font]
+normal = { family = "JetBrainsMono Nerd Font" }
+bold = { family = "JetBrainsMono Nerd Font" }
+italic = { family = "JetBrainsMono Nerd Font" }
+size = 9
+
+# Window settings - clean, minimal appearance
 [window]
-padding = { x = 4, y = 4 }
-decorations = "Full"       # Transparent borders
-opacity = 0.8              # Set the window opacity to 80%
+padding.x = 14
+padding.y = 14
+decorations = "None"  # No title bar for clean look
+
+# Keyboard bindings
+[keyboard]
+bindings = [
+    { key = "F11", action = "ToggleFullscreen" }
+]
+
+# Fallback colors (used if Omarchy theme is not available)
+[colors]
+[colors.primary]
+background = '#1a1b26'  # Tokyo Night background
+foreground = '#a9b1d6'  # Tokyo Night foreground
+
+# Normal colors - Tokyo Night theme
+[colors.normal]
+black = '#32344a'
+red = '#f7768e'
+green = '#9ece6a'
+yellow = '#e0af68'
+blue = '#7aa2f7'
+magenta = '#ad8ee6'
+cyan = '#449dab'
+white = '#787c99'
+
+# Bright colors
+[colors.bright]
+black = '#444b6a'
+red = '#ff7a93'
+green = '#b9f27c'
+yellow = '#ff9e64'
+blue = '#7da6ff'
+magenta = '#bb9af7'
+cyan = '#0db9d7'
+white = '#acb0d0'
+
+[colors.selection]
+background = '#7aa2f7'
