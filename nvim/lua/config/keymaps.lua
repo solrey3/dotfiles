@@ -2,8 +2,7 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
--- Configuration
-local notes_path = vim.env.NOTES_PATH or "~/Repos/github.com/solrey3/notes/"
+-- Notes repository keybindings for PARA method workflow
 local function render_template(content, vars)
   vars = vim.tbl_extend("force", {
     date = os.date("%Y-%m-%d"),
@@ -18,8 +17,10 @@ local function render_template(content, vars)
 end
 
 local function create_note_with_template()
-  local template_dir = vim.fn.expand(notes_path .. "05-templates/")
-  local inbox_dir = vim.fn.expand(notes_path .. "00-inbox/")
+  -- Configurable notes directory (default: ~/Notes)
+  local notes_dir = vim.g.notes_directory or "~/Notes"
+  local template_dir = vim.fn.expand(notes_dir .. "/05-templates/")
+  local inbox_dir = vim.fn.expand(notes_dir .. "/00-inbox/")
   local templates = vim.fn.globpath(template_dir, "*.md", false, true)
 
   if #templates == 0 then
@@ -83,7 +84,7 @@ local function save_and_rename_file()
   print("File saved and renamed to: " .. new_filename)
 end
 
--- Keymaps
+-- Notes workflow keymaps
 vim.keymap.set("n", "<leader>on", create_note_with_template, { desc = "New Note from Template" })
 vim.keymap.set("n", "<leader>ob", save_and_rename_file, { desc = "Save and Rename Note" })
 vim.keymap.set("i", "<C-t>", function()
