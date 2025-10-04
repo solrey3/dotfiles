@@ -30,8 +30,8 @@ get_weather() {
     if ! tooltip=$(timeout "$TIMEOUT" curl -fsSL "https://wttr.in/?0QT" 2>/dev/null); then
         tooltip="Weather details unavailable"
     else
-        # Properly escape the tooltip for JSON
-        tooltip=$(echo "$tooltip" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr '\n' ' ' | sed 's/[[:space:]]*$//')
+        # Properly escape the tooltip for JSON while preserving line breaks
+        tooltip=$(echo "$tooltip" | sed 's/\\/\\\\/g; s/"/\\"/g; s/$/\\n/g' | tr -d '\n' | sed 's/\\n$//')
     fi
 
     # Validate we got actual weather data
