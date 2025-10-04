@@ -1,6 +1,9 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+
+-- Configuration
+local notes_path = vim.env.NOTES_PATH or "~/Repos/github.com/solrey3/notes/"
 local function render_template(content, vars)
   vars = vim.tbl_extend("force", {
     date = os.date("%Y-%m-%d"),
@@ -15,8 +18,8 @@ local function render_template(content, vars)
 end
 
 local function create_note_with_template()
-  local template_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/05-templates/")
-  local inbox_dir = vim.fn.expand("~/Repos/github.com/solrey3/notes/00-inbox/")
+  local template_dir = vim.fn.expand(notes_path .. "05-templates/")
+  local inbox_dir = vim.fn.expand(notes_path .. "00-inbox/")
   local templates = vim.fn.globpath(template_dir, "*.md", false, true)
 
   if #templates == 0 then
