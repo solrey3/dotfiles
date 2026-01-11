@@ -1,18 +1,37 @@
 # ~/.bashrc
 
 # Aliases
+# Traditional ls replacements with eza (if available)
+if command -v eza &> /dev/null; then
+  alias ls="eza"
+  alias ll="eza -l"
+  alias la="eza -la"
+  alias lt="eza -T"
+  alias lg="eza -l --git"
+else
+  # Fallback to traditional ls
+  alias ll='ls -lh'
+  alias la='ls -A'
+  alias l='ls -CF'
+fi
+
+# fd aliases (if available)
+if command -v fd &> /dev/null; then
+  alias find="fd"
+fi
+
+# Other aliases
 alias hist="history 1"
 alias vi="nvim"
 alias vim="nvim"
-alias p2="cd ~/Nextcloud/obsidian/player2; nvim todo.md"
-alias dtf="cd ~/dotfiles; nvim"
+alias nano="nvim"
+alias neofetch="fastfetch"
+alias p2="cd ~/Nextcloud/obsidian/player2; nvim readme.md"
+alias dtf="cd ~/.dotfiles; nvim"
+alias nc="cd ~/nix-config; nvim README.md"
 alias gcm="git commit -m"
 alias gco="git checkout"
-# some more ls aliases
-alias ll='ls -lh'
-alias la='ls -A'
-alias l='ls -CF'
-alias nano="nvim"
+alias k="kubectl"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -25,15 +44,11 @@ fi
 # Set the terminal to handle backspace correctly
 stty erase '^?'
 
-# Add $HOME/bin to PATH
-export PATH="$HOME/bin:$PATH"
-# Homebrew
+# PATH configuration
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
+# Homebrew (macOS)
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
-# Anaconda3
-export PATH="$HOME/anaconda3/bin:$PATH"
-# NeoVim
-export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # Enable bash completion if available
 if [ -f /usr/local/etc/bash_completion ]; then
@@ -47,6 +62,15 @@ fi
 # Append history list and avoid duplicate entries
 shopt -s histappend
 export HISTCONTROL=ignoredups:erasedups # no duplicate entries
+
+# Initialize zoxide (if available)
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init bash)"
+fi
+
+# URL encode/decode utilities
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))"'
 
 # Check for an interactive session
 if [[ $- == *i* ]]; then
@@ -167,14 +191,7 @@ xterm* | rxvt*)
 *) ;;
 esac
 
-export PATH="~/miniconda/bin:$PATH"
-export PATH="$PATH:/opt/nvim-linux64/bin"
-export PATH=~/miniconda3/bin:$PATH
-
-# export NIX_PATH="darwin=$HOME/.nix-defexpr/channels/darwin:nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs"
-# export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
-# export NIXPKGS_SYSTEM=aarch64-darwin
-# export NIXPKGS_ALLOW_BROKEN=1
+# Nix configuration
 export NIXPKGS_ALLOW_UNFREE=1
 
 # Nix

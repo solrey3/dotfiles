@@ -1,12 +1,12 @@
 {
-    "layer": "bottom",
-    "position": "bottom",
+    "layer": "top",
+    "position": "top",
     "mod": "dock",
     "exclusive": true,
     "gtk-layer-shell": true,
     "margin-bottom": -1,
     "passthrough": false,
-    "height": 41,
+    "height": 32,
     "modules-left": [
         "custom/os_button",
         "hyprland/workspaces"
