@@ -14,20 +14,20 @@
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-25.10";
+      url = "github:nixos/nixpkgs/nixos-25.11";
     };
     nixpkgs-unstable = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
     # nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.10-darwin";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
     darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-25.10";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.10";
+      url = "github:nix-community/home-manager/release-25.11";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs dependencies.
@@ -213,7 +213,7 @@
           ];
       };
 
-      # Configuration for NixOS Mike (x86_64-linux)
+      # Configuration for NixOS Papa (x86_64-linux)
       papa = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules =
