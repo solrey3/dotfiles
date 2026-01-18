@@ -35,14 +35,4 @@ stow -t ~ vim
 # Neovim
 stow -t ~/.config/nvim nvim
 
-# WezTerm
-stow -t ~ wezterm
-
-# Alacritty
-stow -t ~/.config/alacritty alacritty
-
-# i3
-stow -t ~/.config/i3 i3
-
 echo "✅ All files have been stowed to their expected locations."
-
