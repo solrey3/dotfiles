@@ -1,146 +1,72 @@
 # ~/.bashrc
 
-# Aliases
-# Traditional ls replacements with eza (if available)
-if command -v eza &> /dev/null; then
-  alias ls="eza"
-  alias ll="eza -l"
-  alias la="eza -la"
-  alias lt="eza -T"
-  alias lg="eza -l --git"
-else
-  # Fallback to traditional ls
-  alias ll='ls -lh'
-  alias la='ls -A'
-  alias l='ls -CF'
-fi
+# If not running interactively, don't do anything
+case $- in
+*i*) ;;
+*) return ;;
+esac
 
-# fd aliases (if available)
-if command -v fd &> /dev/null; then
-  alias find="fd"
-fi
+# =============================================================================
+# History Configuration
+# =============================================================================
+# Append to history file, don't overwrite
+shopt -s histappend
 
-# Other aliases
-alias hist="history 1"
-alias vi="nvim"
-alias vim="nvim"
-alias nano="nvim"
-alias neofetch="fastfetch"
-alias p2="cd ~/Nextcloud/obsidian/player2; nvim readme.md"
-alias dtf="cd ~/.dotfiles; nvim"
-alias nc="cd ~/nix-config; nvim README.md"
-alias gcm="git commit -m"
-alias gco="git checkout"
-alias k="kubectl"
+# No duplicate entries, erase duplicates
+export HISTCONTROL=ignoredups:erasedups
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
+# History size
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# =============================================================================
+# Shell Options
+# =============================================================================
+# Check window size after each command
+shopt -s checkwinsize
 
 # Set the terminal to handle backspace correctly
 stty erase '^?'
 
-# PATH configuration
+# Default parameters for "less": -R: ANSI colors; -i: case insensitive search
+LESS="-R -i"
+
+# =============================================================================
+# PATH Configuration
+# =============================================================================
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
+
+# Go (system install)
+export PATH="$PATH:/usr/local/go/bin"
+
 # Homebrew (macOS)
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 
-# Enable bash completion if available
-if [ -f /usr/local/etc/bash_completion ]; then
-  . /usr/local/etc/bash_completion
-elif [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-elif [ -f /usr/share/bash-completion/bash_completion ]; then
-  . /usr/share/bash-completion/bash_completion
-fi
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Append history list and avoid duplicate entries
-shopt -s histappend
-export HISTCONTROL=ignoredups:erasedups # no duplicate entries
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
 
-# Initialize zoxide (if available)
-if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init bash)"
-fi
-
-# URL encode/decode utilities
-alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))"'
-alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))"'
-
-# Check for an interactive session
-if [[ $- == *i* ]]; then
-  # Use up/down arrow keys to search history
-  bind '"\e[A": history-search-backward'
-  bind '"\e[B": history-search-forward'
-fi
-
-# Completion for terraform
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/budchris/google-cloud-sdk/path.bash.inc' ]; then . '/Users/budchris/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/budchris/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/budchris/google-cloud-sdk/completion.bash.inc'; fi
-
+# =============================================================================
 # Environment Variables
+# =============================================================================
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-# Remove that annoying message from mac about using bash
 export BASH_SILENCE_DEPRECATION_WARNING=1
-
-# Set STARSHIP_CONFIG environment variable
+export NIXPKGS_ALLOW_UNFREE=1
 export STARSHIP_CONFIG=~/.config/starship.toml
-eval "$(starship init bash)"
 
-# Use `xclip` for system clipboard integration
-# bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+# =============================================================================
+# Prompt Configuration
+# =============================================================================
+# Set variable identifying the chroot you work in
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color) color_prompt=yes ;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-# force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-  else
-    color_prompt=
-  fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
+# Color variables for prompt customization
 red='\[\e[0;31m\]'
 RED='\[\e[1;31m\]'
 blue='\[\e[0;34m\]'
@@ -155,32 +81,31 @@ PURPLE='\[\e[1;35m\]'
 purple='\[\e[0;35m\]'
 nc='\[\e[0m\]'
 
+# Set fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+xterm-color | *-256color) color_prompt=yes ;;
+esac
+
+if [ -n "$force_color_prompt" ]; then
+  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    color_prompt=yes
+  else
+    color_prompt=
+  fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# Custom colored prompt based on user
 if [ "$UID" = 0 ]; then
   PS1="$red\u$nc@$red\H$nc:$CYAN\w$nc\\n$red#$nc "
 else
   PS1="$PURPLE\u$nc@$CYAN\H$nc:$GREEN\w$nc\\n$GREEN\$$nc "
-fi
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
-
-  #alias grep='grep --color=auto'
-  #alias fgrep='fgrep --color=auto'
-  #alias egrep='egrep --color=auto'
-fi
-
-# Default parameter to send to the "less" command
-# -R: show ANSI colors correctly; -i: case insensitive search
-LESS="-R -i"
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-  . /etc/bash_completion
 fi
 
 # If this is an xterm set the title to user@host:dir
@@ -191,10 +116,126 @@ xterm* | rxvt*)
 *) ;;
 esac
 
-# Nix configuration
-export NIXPKGS_ALLOW_UNFREE=1
+# =============================================================================
+# Color Support
+# =============================================================================
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+# Make less more friendly for non-text input files
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# =============================================================================
+# Aliases
+# =============================================================================
+# Traditional ls replacements with eza (if available)
+if command -v eza &>/dev/null; then
+  alias ls="eza"
+  alias ll="eza -l"
+  alias la="eza -la"
+  alias lt="eza -T"
+  alias lg="eza -l --git"
+else
+  # Fallback to traditional ls
+  alias ll='ls -lh'
+  alias la='ls -A'
+  alias l='ls -CF'
+fi
+
+# fd aliases (if available)
+if command -v fd &>/dev/null; then
+  alias find="fd"
+fi
+
+# Editor aliases
+alias vi="nvim"
+alias vim="nvim"
+
+# Navigation and utility aliases
+alias hist="history 1"
+alias dtf="cd ~/.dotfiles; nvim"
+alias notes="cd ~/Documents/Notes; nvim"
+
+# Git aliases
+alias gcm="git commit -m"
+alias gco="git checkout"
+
+# Kubernetes
+alias k="kubectl"
+
+# URL encode/decode utilities
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))"'
+
+# Alert alias for long running commands (use: sleep 10; alert)
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Source additional aliases if available
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
+
+# =============================================================================
+# Completions
+# =============================================================================
+# Enable programmable completion features
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  elif [ -f /usr/local/etc/bash_completion ]; then
+    . /usr/local/etc/bash_completion
+  fi
+fi
+
+# Terraform completion
+if [ -x /opt/homebrew/bin/terraform ]; then
+  complete -o nospace -C /opt/homebrew/bin/terraform terraform
+fi
+
+# Google Cloud SDK
+if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
+  . "$HOME/google-cloud-sdk/path.bash.inc"
+fi
+if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then
+  . "$HOME/google-cloud-sdk/completion.bash.inc"
+fi
+
+# =============================================================================
+# Interactive Shell Settings
+# =============================================================================
+if [[ $- == *i* ]]; then
+  # Use up/down arrow keys to search history
+  bind '"\e[A": history-search-backward'
+  bind '"\e[B": history-search-forward'
+fi
+
+# =============================================================================
+# Tool Initializations
+# =============================================================================
+# fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Cargo (Rust)
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # Nix
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
+# zoxide (if available)
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init bash)"
+fi
+
+# starship prompt (should be last to override PS1)
+if command -v starship &>/dev/null; then
+  eval "$(starship init bash)"
 fi
