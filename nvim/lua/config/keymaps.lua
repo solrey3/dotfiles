@@ -18,7 +18,7 @@ end
 
 local function create_note_with_template()
   -- Configurable notes directory (default: ~/Notes)
-  local notes_dir = vim.g.notes_directory or "~/Notes"
+  local notes_dir = vim.g.notes_directory or "~/Documents/Notes"
   local template_dir = vim.fn.expand(notes_dir .. "/05-templates/")
   local inbox_dir = vim.fn.expand(notes_dir .. "/00-inbox/")
   local templates = vim.fn.globpath(template_dir, "*.md", false, true)

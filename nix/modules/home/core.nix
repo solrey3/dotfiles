@@ -139,6 +139,7 @@
 
     ## Python Utilities
     python313
+    python313Packages.pip
     python313Packages.python-frontmatter
 
   ];
